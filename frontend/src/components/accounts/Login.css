@@ -1,0 +1,13 @@
+.box {
+  background: rgb(241, 185, 96);
+  border-radius: 5%;
+}
+
+.btn-link {
+  background: none !important;
+  border: none;
+  padding: 0 !important;
+  color: #069;
+  text-decoration: underline;
+  cursor: pointer;
+}
