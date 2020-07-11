@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { Navbar, Nav, Button, Row } from 'react-bootstrap';
 import './Header.css';
 
-export class Header extends Component {
+export class Footer extends Component {
   static propTypes = {
     auth: PropTypes.object.isRequired,
   };
@@ -47,12 +47,6 @@ export class Header extends Component {
             alt='Jacobo Panaderia'
           />
         </Row>
-        <Navbar expand='sm'>
-          <Navbar.Toggle aria-controls='main-nav' />
-          <Navbar.Collapse id='main-nav'>
-            {isAuthenticated ? authLinks : guestLinks}
-          </Navbar.Collapse>
-        </Navbar>
       </div>
     );
   }

@@ -1,6 +1,5 @@
-.box {
-  background: rgb(241, 185, 96);
-  border-radius: 5%;
+.card-body {
+  background-color: #F2BF5E;
 }
 
 .btn-link {

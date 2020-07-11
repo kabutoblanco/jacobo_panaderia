@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 
+//REDUX
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import NavLateral from './NavLateral';

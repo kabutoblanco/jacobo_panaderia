@@ -22,6 +22,8 @@ import { loadUser } from '../actions/auth';
 
 import { Container } from 'react-bootstrap';
 
+import './App.css';
+
 const alertOptions = {
   timeout: 3000,
   position: 'top center',
@@ -40,7 +42,7 @@ class App extends Component {
             <Fragment>
               <Alerts />
               <Header />
-              <Container fluid className="p-0">
+              <Container fluid className='p-0 app-main'>
                 <Switch>
                   <PrivateRoute exact path='/' component={Dashboard} />
                   <Route exact path='/login' component={Login} />

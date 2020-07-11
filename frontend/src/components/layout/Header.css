@@ -1,0 +1,16 @@
+nav {
+    background-color: #F2AC29 !important;
+}
+
+.main-logo {
+    margin: 10px auto;
+}
+
+.main-menu {
+    font-size: large;
+    font-weight: bold;
+}
+
+.active-custom {
+    border-bottom: 2px solid rgb(120, 74, 71);
+}

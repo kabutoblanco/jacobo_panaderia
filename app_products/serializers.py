@@ -29,9 +29,7 @@ class UpdateSerializer(serializers.ModelSerializer):
         instance.name = validated_data['name']
         instance.price_buy = validated_data['price_buy']
         instance.price_sale = validated_data['price_sale']
-        instance.presentation = validated_data['presentation']
         instance.stock = validated_data['stock']
-        instance.type_product = validated_data['type_product']
         instance.category = validated_data['category']
         instance.save()
         return instance

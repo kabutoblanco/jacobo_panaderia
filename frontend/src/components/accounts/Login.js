@@ -8,6 +8,8 @@ import PropTypes from 'prop-types';
 //STYLESS
 import './Login.css';
 import { Form, Button, Card } from 'react-bootstrap';
+
+//ROUTER
 import { Redirect } from 'react-router-dom';
 
 export class Login extends Component {
@@ -67,8 +69,8 @@ export class Login extends Component {
                     Olvide mi contraseña
                   </Button>
                   <br />
-                  <Button type='submit' className='btn-primary'>
-                    Ingresar
+                  <Button type='submit' className='btn-primary btn-black'>
+                    INGRESAR
                   </Button>
                 </div>
               </Form>
