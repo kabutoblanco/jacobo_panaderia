@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 //STYLESS
 import './Login.css';
-import { Form, Button, Card } from 'react-bootstrap';
+import { Button, Card, Col, Form } from 'react-bootstrap';
 
 //ROUTER
 import { Redirect } from 'react-router-dom';
@@ -24,12 +24,17 @@ export class Login extends Component {
   };
 
   onChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
   };
 
   onSubmit = () => {
     event.preventDefault();
-    this.props.login(this.state.username, this.state.password);
+    this.props.login(
+      this.state.username,
+      this.state.password
+    );
   };
 
   render() {
@@ -39,12 +44,13 @@ export class Login extends Component {
     }
     return (
       <Fragment>
-        <div className='col-md-6 m-auto'>
-          <Card className='mt-5'>
+        <Col
+          className='body-login'>
+          <Card className='card-login'>
             <Card.Body>
               <Form onSubmit={this.onSubmit}>
                 <Form.Label>
-                  <h3 className='mt-2'>Iniciar Sesión</h3>
+                  <h3 className='mt-2'>INICIAR SESION</h3>
                 </Form.Label>
                 <Form.Control
                   className='mb-2'
@@ -69,14 +75,16 @@ export class Login extends Component {
                     Olvide mi contraseña
                   </Button>
                   <br />
-                  <Button type='submit' className='btn-primary btn-black'>
+                  <Button
+                    type='submit'
+                    className='btn-primary btn-black'>
                     INGRESAR
                   </Button>
                 </div>
               </Form>
             </Card.Body>
           </Card>
-        </div>
+        </Col>
       </Fragment>
     );
   }

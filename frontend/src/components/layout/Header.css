@@ -2,6 +2,24 @@ nav {
     background-color: #F2AC29 !important;
 }
 
+a {
+    text-decoration: none;
+    margin: auto 12px;
+    color: rgb(120, 74, 71);
+    border-bottom: 2px solid rgb(120, 74, 71, 0);
+}
+
+a:hover {
+    color: rgb(120, 74, 71, 0.5);
+    text-decoration: none;
+}
+
+#nav-top {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
 .main-logo {
     margin: 10px auto;
 }
@@ -13,4 +31,5 @@ nav {
 
 .active-custom {
     border-bottom: 2px solid rgb(120, 74, 71);
+    font-weight: bolder;
 }

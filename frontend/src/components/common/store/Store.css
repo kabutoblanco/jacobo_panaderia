@@ -1,0 +1,77 @@
+.my-row {
+  display: flex;
+  margin: 5px 0;
+  width: 100%;
+  
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.my-card {
+  width: 25%;
+  margin: 0 10px;
+  border: 1px solid black;
+}
+
+.my-card-body {
+  padding: 0;
+}
+
+.card-header,
+.card-footer {
+  color: white;
+  background-color: rgb(120, 74, 71, 0.95);
+  padding: 5px 10px;
+  font-size: small;
+}
+
+.card-footer:last-child {
+  border-radius: 0;
+}
+
+.card-footer {
+  bottom: 0;
+  border-radius: none;
+}
+
+.ml-a {
+  margin-left: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+  .my-card {
+    width: 100%;
+    margin: 0 0 10px 0;
+  }
+
+  .my-row {
+    display: inline-block;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .my-card {
+    width: 100%;
+    margin: 0 0 10px 0;
+  }
+
+  .card-body {
+    height: 100px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .my-card {
+    width: 30%;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .my-card {
+    margin: 0 10px;
+  }
+
+  .card-body {
+    height: 120px;
+  }
+}

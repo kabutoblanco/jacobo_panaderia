@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 
+//ROUTER
+import { Link } from 'react-router-dom';
+
 //REDUX
 import { connect } from 'react-redux';
 import { logout } from '../../actions/auth';
 import PropTypes from 'prop-types';
 
 //STYLESS
-import { Navbar, Nav, Button, Row } from 'react-bootstrap';
+import { Button, Nav, Navbar } from 'react-bootstrap';
 import './Header.css';
 
 export class Header extends Component {
@@ -19,6 +22,8 @@ export class Header extends Component {
   };
 
   render() {
+    let path = window.location;
+    console.log(path);
     const { isAuthenticated } = this.props.auth;
     const authLinks = (
       <Button variant='outline-success' onClick={this.onLogout}>
@@ -27,26 +32,17 @@ export class Header extends Component {
     );
     const guestLinks = (
       <Nav className='justify-content-center w-100 main-menu'>
-        <Nav.Link href='#inicio' className='active-custom'>
+        <Link to='/inicio' className='active-custom'>
           Inicio
-        </Nav.Link>
-        <Nav.Link href='#favoritos'>Favoritos</Nav.Link>
-        <Nav.Link href='#panes'>Panes</Nav.Link>
-        <Nav.Link href='#pasteles'>Pasteles</Nav.Link>
-        <Nav.Link href='#galletas'>Galletas</Nav.Link>
+        </Link>
+        <Link to='/favoritos'>Favoritos</Link>
+        <Link to='/panes'>Panes</Link>
+        <Link to='/pasteles'>Pasteles</Link>
+        <Link to='/galletas'>Galletas</Link>
       </Nav>
     );
     return (
-      <div className='banner'>
-        <Row className='m-auto'>
-          <img
-            src='../../../static/frontend/img/logo.png'
-            width={124 * 3.25}
-            height={42 * 3.25}
-            className='d-block align-top main-logo img-fluid'
-            alt='Jacobo Panaderia'
-          />
-        </Row>
+      <div id='nav-top'>
         <Navbar expand='sm'>
           <Navbar.Toggle aria-controls='main-nav' />
           <Navbar.Collapse id='main-nav'>

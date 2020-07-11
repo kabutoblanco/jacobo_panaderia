@@ -6,8 +6,8 @@ import { logout } from '../../actions/auth';
 import PropTypes from 'prop-types';
 
 //STYLESS
-import { Navbar, Nav, Button, Row } from 'react-bootstrap';
-import './Header.css';
+import { Col, Nav, Button, Row } from 'react-bootstrap';
+import './Footer.css';
 
 export class Footer extends Component {
   static propTypes = {
@@ -37,15 +37,21 @@ export class Footer extends Component {
       </Nav>
     );
     return (
-      <div className='banner'>
+      <div className='footer'>
         <Row className='m-auto'>
-          <img
-            src='../../../static/frontend/img/logo.png'
-            width={124 * 3.25}
-            height={42 * 3.25}
-            className='d-block align-top main-logo img-fluid'
-            alt='Jacobo Panaderia'
-          />
+          <Col className='p-3'>
+            <h4>Información</h4>
+            <p>Calle 73 DN # 1 - 81 B/ Villa del Norte</p>
+            <p>317 448 46 35</p>
+            <p>yvvelasco@gmail.com</p>
+            <p>Popayán - Cauca - Colombia</p>
+          </Col>
+          <Col>
+            <h4>Redes sociales</h4>
+            <p>Facebook</p>
+            <p>Instamgran</p>
+            <p>YouTube</p>
+          </Col>
         </Row>
       </div>
     );
@@ -56,4 +62,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { logout })(Header);
+export default connect(mapStateToProps, { logout })(Footer);
