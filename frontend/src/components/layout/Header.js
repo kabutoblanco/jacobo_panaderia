@@ -23,6 +23,7 @@ export class Header extends Component {
 
   state = {
     option: false,
+    select: false,
   };
 
   onLogout = () => {
@@ -30,7 +31,7 @@ export class Header extends Component {
   };
 
   onLink = () => {
-    this.setState({ option: true });
+    this.setState({ option: true, select: false });
   };
 
   render() {
@@ -88,8 +89,8 @@ export class Header extends Component {
     );
     return (
       <div id='nav-top'>
-        <Navbar expand='sm'>
-          <Navbar.Toggle aria-controls='main-nav' />
+        <Navbar expand='sm' expanded={this.state.select}>
+          <Navbar.Toggle aria-controls='main-nav' onClick={() => this.setState({select: !this.state.select})} />
           <Navbar.Collapse id='main-nav'>
             {isAuthenticated ? authLinks : guestLinks}
           </Navbar.Collapse>
