@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Product from './Product';
+import ProductCart from './ProductCart';
 import { ListGroup } from 'react-bootstrap';
 
 export class Cart extends Component {
@@ -13,18 +13,32 @@ export class Cart extends Component {
             <div className='col-md-8 p-0'>
               <ListGroup>
                 <ListGroup.Item>
-                  <Product img='/static/frontend/img/pan1.jpg'/>
+                  <ProductCart img='/static/frontend/img/pan1.jpg' />
                 </ListGroup.Item>
-                <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-                <ListGroup.Item>Morbi leo risus</ListGroup.Item>
-                <ListGroup.Item>Porta ac consectetur ac</ListGroup.Item>
-                <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
+                <ListGroup.Item>
+                  <ProductCart img='/static/frontend/img/galleta1.jpg' />
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <ProductCart img='/static/frontend/img/pastel1.jpg' />
+                </ListGroup.Item>
               </ListGroup>
             </div>
             <div className='col-md-4 p-0'>
               <div className='card invoce'>
                 <div className='card-body'>
-                  <div className=''>Hola perros</div>
+                  <div>
+                    <span className='d-block'>
+                      Subtotal <span className='float-right'>$6000</span>
+                    </span>
+                    <span className='d-block'>
+                      Envio <span className='float-right'>$1000</span>
+                    </span>
+                    <hr />
+                    <span className='d-block'>
+                      Total <span className='float-right'>$7000</span>
+                    </span>
+                    <button className='btn btn-primary mt-3 w-100'>FINALIZAR COMPRA</button>
+                  </div>
                 </div>
               </div>
             </div>

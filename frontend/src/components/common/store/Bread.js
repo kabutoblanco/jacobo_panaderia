@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Product from './Product';
+import ProductStore from './ProductStore';
 import './Store.css';
 
 export class Bread extends Component {
@@ -10,12 +10,12 @@ export class Bread extends Component {
         <div className='pt-5 pb-5'>
           <h4 className='ml-a'>Panes</h4>
           <div className='my-row'>
-            <Product img='../../../../static/frontend/img/pan1.jpg' />
-            <Product img='../../../../static/frontend/img/pan2.png' />
-            <Product img='../../../../static/frontend/img/pan1.jpg' />
-            <Product img='../../../../static/frontend/img/pan2.png' />
-            <Product img='../../../../static/frontend/img/pan1.jpg' />
-            <Product img='../../../../static/frontend/img/pan2.png' />
+            <ProductStore img='../../../../static/frontend/img/pan1.jpg' />
+            <ProductStore img='../../../../static/frontend/img/pan2.png' />
+            <ProductStore img='../../../../static/frontend/img/pan1.jpg' />
+            <ProductStore img='../../../../static/frontend/img/pan2.png' />
+            <ProductStore img='../../../../static/frontend/img/pan1.jpg' />
+            <ProductStore img='../../../../static/frontend/img/pan2.png' />
           </div>
         </div>
       </div>
