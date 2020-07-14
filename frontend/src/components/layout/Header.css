@@ -1,35 +1,60 @@
 nav {
-    background-color: #F2AC29 !important;
+  background-color: #f2ac29 !important;
 }
 
 a {
-    text-decoration: none;
-    margin: auto 12px;
-    color: rgb(120, 74, 71);
-    border-bottom: 2px solid rgb(120, 74, 71, 0);
+  text-decoration: none;
+  margin: auto 12px;
+  color: rgb(120, 74, 71);
+  border-bottom: 2px solid rgb(120, 74, 71, 0);
 }
 
 a:hover {
-    color: rgb(120, 74, 71, 0.5);
-    text-decoration: none;
+  color: rgb(120, 74, 71, 0.5);
+  text-decoration: none;
 }
 
 #nav-top {
-    position: sticky;
-    top: 0;
-    z-index: 10;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .main-logo {
-    margin: 10px auto;
+  margin: 10px auto;
+}
+
+@media only screen and (max-width: 740px) {
+  .main-logo {
+    padding: 0 5px;
+  }
 }
 
 .main-menu {
-    font-size: large;
-    font-weight: bold;
+  font-size: large;
+  font-weight: bold;
 }
 
 .active-custom {
-    border-bottom: 2px solid rgb(120, 74, 71);
-    font-weight: bolder;
+  border-bottom: 2px solid rgb(120, 74, 71);
+  font-weight: bolder;
+}
+
+.cart {
+  width: fit-content;
+  min-width: 25px;
+  position: relative;
+}
+
+.count-cart {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: red;
+  color: white;
+  line-height: 14px;
+  font-size: 10px;
+  border-radius: 4px;
+  min-width: 10px;
+  text-align: center;
 }

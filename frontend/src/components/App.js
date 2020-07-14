@@ -26,6 +26,9 @@ import Header from './layout/Header';
 import Bread from '../components/common/store/Bread';
 import Cake from '../components/common/store/Cake';
 import Cookie from '../components/common/store/Cookie';
+import Favorites from '../components/common/store/Favorites';
+import Cart from '../components/common/store/Cart';
+import Home from '../components/common/Home';
 
 //REDUX
 import store from '../store';
@@ -64,10 +67,11 @@ class App extends Component {
     const hBanner = document.getElementById('banner').clientHeight;
     const hNavbar = document.getElementById('nav-top').clientHeight;
     const hWindow = window.innerHeight;
-    this.setState({ height: hWindow - (hBanner + hNavbar) });
+    this.setState({ height: hWindow - hBanner - hNavbar });
   };
 
   render() {
+    const { height } = this.state;
     return (
       <Provider store={store}>
         <AlertProvider template={AlertTemplate} {...alertOptions}>
@@ -80,13 +84,21 @@ class App extends Component {
                 fluid
                 className='p-0 app-main'
                 style={{
-                  minHeight: this.state.height + 'px', height: 'fit-content'
+                  minHeight: height + 'px',
+                  height: 'fit-content',
                 }}>
                 <Switch>
                   <PrivateRoute exact path='/' component={Dashboard} />
+                  <Route
+                    exact
+                    path='/inicio'
+                    render={() => <Home height={height} />}
+                  />
+                  <Route exact path='/favoritos' component={Favorites} />
                   <Route exact path='/panes' component={Bread} />
                   <Route exact path='/pasteles' component={Cake} />
                   <Route exact path='/galletas' component={Cookie} />
+                  <Route exact path='/carro' component={Cart} />
                   <Route exact path='/login' component={Login} />
                 </Switch>
               </Container>

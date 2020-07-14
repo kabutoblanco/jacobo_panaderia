@@ -47,7 +47,7 @@ export class Login extends Component {
         <Col
           className='body-login'>
           <Card className='card-login'>
-            <Card.Body>
+            <Card.Body className='my-login'>
               <Form onSubmit={this.onSubmit}>
                 <Form.Label>
                   <h3 className='mt-2'>INICIAR SESION</h3>

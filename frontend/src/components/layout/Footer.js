@@ -5,6 +5,14 @@ import { connect } from 'react-redux';
 import { logout } from '../../actions/auth';
 import PropTypes from 'prop-types';
 
+//FAVICON
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faFacebook,
+  faInstagram,
+  faYoutube,
+} from '@fortawesome/free-brands-svg-icons';
+
 //STYLESS
 import { Col, Nav, Button, Row } from 'react-bootstrap';
 import './Footer.css';
@@ -20,22 +28,6 @@ export class Footer extends Component {
 
   render() {
     const { isAuthenticated } = this.props.auth;
-    const authLinks = (
-      <Button variant='outline-success' onClick={this.onLogout}>
-        Salir
-      </Button>
-    );
-    const guestLinks = (
-      <Nav className='justify-content-center w-100 main-menu'>
-        <Nav.Link href='#inicio' className='active-custom'>
-          Inicio
-        </Nav.Link>
-        <Nav.Link href='#favoritos'>Favoritos</Nav.Link>
-        <Nav.Link href='#panes'>Panes</Nav.Link>
-        <Nav.Link href='#pasteles'>Pasteles</Nav.Link>
-        <Nav.Link href='#galletas'>Galletas</Nav.Link>
-      </Nav>
-    );
     return (
       <div className='footer'>
         <Row className='m-auto'>
@@ -48,9 +40,18 @@ export class Footer extends Component {
           </Col>
           <Col>
             <h4>Redes sociales</h4>
-            <p>Facebook</p>
-            <p>Instamgran</p>
-            <p>YouTube</p>
+            <p>
+              <FontAwesomeIcon icon={faFacebook} />
+              <span className='ml-1'>Facebook</span>
+            </p>
+            <p>
+              <FontAwesomeIcon icon={faInstagram} />
+              <span className='ml-1'>Instamgran</span>
+            </p>
+            <p>
+              <FontAwesomeIcon icon={faYoutube} />
+              <span className='ml-1'>YouTube</span>
+            </p>
           </Col>
         </Row>
       </div>

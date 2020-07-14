@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 
 //STYLESS
 import { Navbar, Nav, Button, Row } from 'react-bootstrap';
+import './Header.css';
 
 export class Banner extends Component {
   static propTypes = {

@@ -2,15 +2,14 @@
   display: flex;
   margin: 5px 0;
   width: 100%;
-  
+
   flex-direction: row;
   flex-wrap: wrap;
 }
 
 .my-card {
   width: 25%;
-  margin: 0 10px;
-  border: 1px solid black;
+  padding: 5px 10px;
 }
 
 .my-card-body {
@@ -32,27 +31,56 @@
 .card-footer {
   bottom: 0;
   border-radius: none;
+  display: flex;
 }
 
 .ml-a {
   margin-left: 10px;
 }
 
-@media only screen and (max-width: 600px) {
+.about {
+  width: 50%;
+}
+
+.buy {
+  display: flex;
+  align-content: center;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.buy input {
+  align-self: center;
+  width: 50px;
+  height: 25px;
+}
+
+.buy button {
+  width: fit-content;
+  height: 25px;
+  align-self: center;
+  margin-left: 2px;
+  border-radius: 0;
+  padding: 3px 2px;
+  font-size: small;
+  background-color: rgba(52, 131, 250, 0.5);
+}
+
+.my-card:hover .btn {
+  background-color: rgba(52, 131, 250);
+}
+
+@media only screen and (max-width: 540px) {
   .my-card {
     width: 100%;
-    margin: 0 0 10px 0;
-  }
-
-  .my-row {
-    display: inline-block;
+    padding: 0 5px 10px 0;
   }
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 540px) {
   .my-card {
     width: 100%;
-    margin: 0 0 10px 0;
+    padding: 0 5px 10px 0;
   }
 
   .card-body {
@@ -60,18 +88,46 @@
   }
 }
 
+@media only screen and (max-width: 768px) {
+  .invoce {
+    margin-top: 10px;
+    margin-left: 0;
+  }
+}
+
 @media only screen and (min-width: 768px) {
   .my-card {
-    width: 30%;
-    flex-direction: row;
-    flex-wrap: wrap;
+    width: 33%;
   }
 
   .my-card {
-    margin: 0 10px;
+    padding: 5px 10px;
   }
 
   .card-body {
     height: 120px;
+  }
+  .invoce {
+    margin-top: 0;
+    margin-left: 10px;
+  }
+}
+
+@media only screen and (min-width: 960px) {
+  .my-card {
+    width: 25%;
+  }
+
+  .my-card {
+    padding: 5px 10px;
+  }
+
+  .card-body {
+    height: 120px;
+  }
+
+  .invoce {
+    margin-top: 0;
+    margin-left: 10px;
   }
 }

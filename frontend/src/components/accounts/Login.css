@@ -1,11 +1,12 @@
-.card-body {
+.my-login {
   text-align: center;
   border-radius: 10px;
   border: 2px solid #F2AC29;
   padding: 35px 22px;
+  height: auto !important;
 }
 
-.card {
+.body-login .card {
   border: none;
 }
 
@@ -22,7 +23,7 @@
   justify-content: center;
   align-items: center;
   display: flex;
-  height: 100%;
+  min-height: inherit;
 }
 
 .card-login {
