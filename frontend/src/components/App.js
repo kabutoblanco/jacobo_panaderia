@@ -33,6 +33,7 @@ import Home from '../components/common/Home';
 //REDUX
 import store from '../store';
 import { loadUser } from '../actions/auth';
+import { getProducts } from '../actions/inventory';
 import { Provider } from 'react-redux';
 
 //ALERTS
@@ -55,6 +56,7 @@ class App extends Component {
 
   componentDidMount() {
     store.dispatch(loadUser());
+    store.dispatch(getProducts());
     this.handleResize();
     window.addEventListener('resize', this.handleResize.bind(this));
   }

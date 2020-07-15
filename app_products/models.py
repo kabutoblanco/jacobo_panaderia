@@ -54,11 +54,12 @@ class Presentation(models.Model):
 class Product(models.Model):
     code = models.IntegerField(default=0)
     name = models.CharField(max_length=124)
+    image = models.CharField(max_length=248)
     price_buy = models.FloatField(default=0.0)
     price_sale = models.FloatField(default=0.0)
     stock = models.IntegerField(default=0)
     unit_base = models.ForeignKey(Unit, on_delete=models.CASCADE)
-    presentation = models.ManyToManyField(Presentation, related_name="MyPresentation")
+    presentation = models.ManyToManyField(Presentation, related_name="MyPresentations")
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
     def __str__(self):

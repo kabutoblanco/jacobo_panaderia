@@ -28,8 +28,8 @@ class BuyManager(BaseUserManager):
 
 class Inventory(models.Model):
     code = models.CharField(max_length=12)  
-    date = models.DateField()
-    date = models.DateField()
+    date_init = models.DateField()
+    date_end = models.DateField()
 
     def __str__(self):
         return "{}".format(self.code)
@@ -45,18 +45,30 @@ class Action(models.Model):
     client = models.CharField(max_length=24)
     price = models.FloatField(default=0.0)
     price_partial = models.FloatField(default=0.0)
-    amount = models.FloatField(default=0.0)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now=True)
     last_date = models.DateTimeField(auto_now=True)
     type = models.IntegerField(choices=TYPE_CHOICES, default=1)
+    inventory = models.ForeignKey(Inventory, on_delete=models.CASCADE)
 
     def __str__(self):
         return "{}".format(self.price)
 
+    
+class ProductAction(models.Model):
+    action = models.ForeignKey(Action, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    amount = models.FloatField(default=0.0)
+    price = models.FloatField(default=0.0)
+
+    def __str__(self):
+        return "{}".format(self.action)
+
 
 class Sale(Action):
-    code = models.CharField(max_length=12)    
+    TYPE_CHOICES = ((1, _("LOCAL")), (2, _("DOMICILIO"))))
+
+    code = models.CharField(max_length=12)   
+    type = models.IntegerField(choices=TYPE_CHOICES, default=1)
 
     class Meta:
         verbose_name = "Venta"

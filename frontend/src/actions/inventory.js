@@ -4,11 +4,11 @@ import { GET_PRODUCTS } from './types';
 
 export const getProducts = () => (dispatch) => {
   axios
-    .get('api/list')
+    .get('/products/api/list')
     .then((res) => {
       dispatch({
         type: GET_PRODUCTS,
-        payload: res.data,
+        payload: res.data.products,
       });
     })
     .catch((err) => console.log(err));

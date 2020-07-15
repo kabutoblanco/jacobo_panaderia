@@ -1,25 +1,28 @@
 import React, { Component } from 'react';
 
 import ProductStore from './ProductStore';
+import { connect } from 'react-redux';
 import './Store.css';
 
 export class Cookie extends Component {
   render() {
+    const products = this.props.products.map((product) => (
+      <ProductStore key={product.id} product={product} />
+    ));
+
     return (
       <div className='container'>
         <div className='pt-5 pb-5'>
-          <h4 className='ml-a'>Galletas</h4>
-          <div className='my-row'>
-            <ProductStore img='../../../../static/frontend/img/galleta1.jpg' />
-            <ProductStore img='../../../../static/frontend/img/galleta1.jpg' />
-            <ProductStore img='../../../../static/frontend/img/galleta2.jpg' />
-            <ProductStore img='../../../../static/frontend/img/galleta2.jpg' />
-            <ProductStore img='../../../../static/frontend/img/galleta1.jpg' />
-          </div>
+          <h4 className='ml-a'>Panes</h4>
+          <div className='my-row'>{products}</div>
         </div>
       </div>
     );
   }
 }
 
-export default Cookie;
+const mapStateToProps = (state) => ({
+  products: state.inventory.products,
+});
+
+export default connect(mapStateToProps)(Cookie);

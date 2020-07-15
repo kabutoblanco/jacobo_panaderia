@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ('name', 'price_buy', 'stock')
+        fields = ('id', 'name', 'price_sale', 'stock')
 
 
 class RegisterSerializer(serializers.ModelSerializer):
