@@ -53,7 +53,7 @@ export class ProductCart extends Component {
         <div className='my-card-body'>
           <img
             className='img-fluid'
-            src={'/static/frontend/img/pan1.jpg'}
+            src={this.props.product.image}
             alt=''
           />
         </div>
