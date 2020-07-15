@@ -81,7 +81,7 @@ export class Header extends Component {
           <div>
             <div className='cart'>
               <FontAwesomeIcon icon={faShoppingCart} />
-              <span className='count-cart'>2</span>
+              <span className='count-cart'  style={{display: this.props.products.length > 0 ? 'inline' : 'none'}}>{this.props.products.length}</span>
             </div>
           </div>
         </Link>
@@ -90,7 +90,10 @@ export class Header extends Component {
     return (
       <div id='nav-top'>
         <Navbar expand='sm' expanded={this.state.select}>
-          <Navbar.Toggle aria-controls='main-nav' onClick={() => this.setState({select: !this.state.select})} />
+          <Navbar.Toggle
+            aria-controls='main-nav'
+            onClick={() => this.setState({ select: !this.state.select })}
+          />
           <Navbar.Collapse id='main-nav'>
             {isAuthenticated ? authLinks : guestLinks}
           </Navbar.Collapse>
@@ -102,6 +105,7 @@ export class Header extends Component {
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  products: state.cart.products,
 });
 
 export default connect(mapStateToProps, { logout })(Header);

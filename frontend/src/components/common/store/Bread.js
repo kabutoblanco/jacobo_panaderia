@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 
 import ProductStore from './ProductStore';
 import './Store.css';
-import { getProducts } from '../../../actions/inventory';
+import { addCart } from '../../../actions/cart';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 export class Bread extends Component {
   static propTypes = {
     products: PropTypes.array.isRequired,
-    // getProducts: PropTypes.func.isRequired,
+    addCart: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
@@ -36,4 +36,4 @@ const mapStateToProps = (state) => ({
   products: state.inventory.products,
 });
 
-export default connect(mapStateToProps, { getProducts })(Bread);
+export default connect(mapStateToProps, { addCart })(Bread);

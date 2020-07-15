@@ -1,6 +1,34 @@
 import React, { Component } from 'react';
+import { addCart } from '../../../actions/cart';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 export class ProductStore extends Component {
+  static propTypes = {
+    addCart: PropTypes.func.isRequired,
+  };
+
+  state = {
+    amount: 0,
+    total: 0,
+  };
+
+  onChange = (event) => {
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  onAddCart = () => {
+    console.log(this.props)
+    const product = {
+      ...this.props.product,
+      amount: this.state.amount,
+      total: this.state.amount * this.props.product.price_sale,
+    };
+    this.props.addCart(product)
+  };
+
   render() {
     return (
       <div className='my-card'>
@@ -17,8 +45,16 @@ export class ProductStore extends Component {
             <span>${this.props.product.price_sale}</span>
           </div>
           <div className='buy'>
-            <input type='number' name='' id='' />
-            <button className='btn btn-primary'>COMPRAR</button>
+            <input
+              type='number'
+              name='amount'
+              id=''
+              value={this.state.amount}
+              onChange={this.onChange}
+            />
+            <button className='btn btn-primary' onClick={this.onAddCart}>
+              COMPRAR
+            </button>
           </div>
         </div>
       </div>
@@ -26,4 +62,6 @@ export class ProductStore extends Component {
   }
 }
 
-export default ProductStore;
+const mapStateToProps = (state) => ({});
+
+export default connect(mapStateToProps, { addCart })(ProductStore);

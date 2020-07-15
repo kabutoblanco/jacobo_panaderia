@@ -5,6 +5,10 @@ export const AUTH_ERROR = 'AUTH_ERROR';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 
+export const ADD_CART = 'ADD_CART';
+export const SET_CART = 'SET_CART';
+export const DELETE_CART = 'DELETE_CART';
+
 export const GET_PRODUCTS = 'GET_PRODUCTS';
 
 export const SET_OPTION = 'SET_OPTION';
