@@ -67,7 +67,7 @@ input[type='number'] {
 .text-over {
   overflow: hidden;
   text-overflow: ellipsis;
-  display: -webkit-box;
+  display: block;
   -webkit-line-clamp: 2; /* number of lines to show */
   -webkit-box-orient: vertical;
 }

@@ -63,13 +63,13 @@ export class Product extends Component {
           </div>
           <div className='card-footer d-flex' style={{maxWidth: '100px'}}>
             <div className='about-cart d-flex'>
-              <span className='d-inline align-self-center text-over'>
+              <span className='align-self-center text-over'>
                 {this.props.product.name}
               </span>
             </div>
           </div>
         </td>
-        <td className=''>
+        <td>
           <span>${this.props.product.price_sale}</span>
         </td>
         <td>
