@@ -14,9 +14,9 @@ export const setCart = (product) => (dispatch) => {
   });
 };
 
-export const deleteCart = (id) => (dispatch) => {
+export const deleteCart = (id, presentation) => (dispatch) => {
   dispatch({
     type: DELETE_CART,
-    payload: id,
+    payload: { id: id, presentation: presentation },
   });
 };

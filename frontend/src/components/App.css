@@ -1,4 +1,8 @@
 .app-main {
-    background-image: url('/static/frontend/img/fondo.svg');
-    background-repeat: repeat;
+  background-image: url('/static/frontend/img/fondo.svg');
+  background-repeat: repeat;
+  height: 'fit-content';
+  padding: 0;
 }
+
+/* ALL */

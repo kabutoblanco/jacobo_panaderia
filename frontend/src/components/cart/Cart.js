@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
-import ProductCart from './ProductCart';
-import { ListGroup } from 'react-bootstrap';
+import Product from './Product';
+import './Cart.css';
+import { Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -30,7 +31,6 @@ export class Cart extends Component {
         return a + b.total;
       }, 0);
       const price_total = price_subtotal + this.state.price_shipping;
-      console.log(price_subtotal);
       this.setState({
         price_subtotal: price_subtotal,
         price_total: price_total,
@@ -40,9 +40,12 @@ export class Cart extends Component {
 
   render() {
     const products = this.props.products.map((product) => (
-      <ListGroup.Item key={product.id}>
-        <ProductCart key={product.id} product={product} />
-      </ListGroup.Item>
+      <tr key={product.id.toString() + product.presentation.id.toString()}>
+        <Product
+          key={product.id.toString() + product.presentation.id.toString()}
+          product={product}
+        />
+      </tr>
     ));
     return (
       <div className='container'>
@@ -50,17 +53,21 @@ export class Cart extends Component {
           <h4 className='ml-a'>Mi carrito</h4>
           <div className='my-row'>
             <div className='col-md-8 p-0'>
-              <ListGroup className='container-cart'>
-                <ListGroup.Item
-                  key={-1}
-                  style={{
-                    display:
-                      this.props.products.length === 0 ? 'inline' : 'none',
-                  }}>
-                  <span className='p-2'>Carrito vacio</span>
-                </ListGroup.Item>
-                {products}
-              </ListGroup>
+              {this.props.products.length === 0 ? (
+                <span className='p-2'>Carrito vacio</span>
+              ) : (
+                <Table responsive>
+                  <thead>
+                    <tr>
+                      <th>Producto</th>
+                      <th>Precio</th>
+                      <th>Cantidad</th>
+                      <th>Subtotal</th>
+                    </tr>
+                  </thead>
+                  <tbody>{products}</tbody>
+                </Table>
+              )}
             </div>
             <div className='col-md-4 p-0'>
               <div className='card invoce'>

@@ -14,8 +14,9 @@ class ProductManager(BaseUserManager):
 class Category(models.Model):
     TYPE_CHOICES = ((1, _("PANADERIA")), (2, _("TIENDA")))
 
+    code = models.CharField(max_length=12, unique=True)
     name = models.CharField(max_length=124)
-    my_type = models.IntegerField(choices=TYPE_CHOICES, default=1)
+    type = models.IntegerField(choices=TYPE_CHOICES, default=1)
 
     def __str__(self):
         return "{}".format(self.name)
@@ -26,8 +27,9 @@ class Category(models.Model):
 
 
 class Unit(models.Model):
-    code = models.IntegerField(default=0)
-    name = models.CharField(max_length=124)
+    code = models.CharField(max_length=12, unique=True)
+    name = models.CharField(max_length=64)
+    abbr = models.CharField(max_length=8)
 
     def __str__(self):
         return "{}".format(self.name)
@@ -38,8 +40,8 @@ class Unit(models.Model):
 
 
 class Presentation(models.Model):
-    code = models.IntegerField(default=0)
-    name = models.CharField(max_length=124)
+    code = models.CharField(max_length=12, unique=True)
+    name = models.CharField(max_length=64)
     amount = models.FloatField(default=0.0)
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
 
@@ -52,14 +54,13 @@ class Presentation(models.Model):
 
 
 class Product(models.Model):
-    code = models.IntegerField(default=0)
-    name = models.CharField(max_length=124)
+    ref = models.CharField(max_length=12, unique=True)
+    name = models.CharField(max_length=64)
     image = models.FileField()
     price_buy = models.FloatField(default=0.0)
-    price_sale = models.FloatField(default=0.0)
     stock = models.IntegerField(default=0)
     unit_base = models.ForeignKey(Unit, on_delete=models.CASCADE)
-    presentation = models.ManyToManyField(Presentation, related_name="MyPresentations")
+    presentations = models.ManyToManyField(Presentation, through='ProductPresentation', through_fields=('product', 'presentation'))
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -70,3 +71,17 @@ class Product(models.Model):
     class Meta:
         verbose_name = "Producto"
         verbose_name_plural = "Productos"
+
+class ProductPresentation(models.Model):
+    code = models.CharField(max_length=12, unique=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    presentation = models.ForeignKey(Presentation, on_delete=models.CASCADE)
+    price_sale = models.FloatField(default=0.0)
+
+    def __str__(self):
+        return "[{}] {} {}".format(self.id, self.presentation.name, self.price_sale)
+
+    class Meta:
+        verbose_name = "Mi presentacion"
+        verbose_name_plural = "Mis presentaciones"
+

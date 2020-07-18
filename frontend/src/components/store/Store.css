@@ -31,39 +31,91 @@
 .card-footer {
   bottom: 0;
   border-radius: none;
-  display: flex;
 }
 
 .ml-a {
   margin-left: 10px;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+.control {
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  display: flex;
+  margin-right: 5px;
+  margin-left: 2px;
+}
+
+.control-add {
+  height: 100%;
+}
+
 .about {
-  width: 50%;
+  text-align: center;
+  width: 100%;
+  text-transform: uppercase;
 }
 
 .buy {
   display: flex;
-  align-content: center;
-  justify-content: flex-end;
   width: 100%;
+  justify-content: center;
+  margin-bottom: 5px;
+  height: 44px;
+}
+
+.control-select {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 7px;
 }
 
 .buy input {
   align-self: center;
   width: 50px;
-  height: 25px;
+  text-align: center;
+  height: -webkit-fill-available;
+  font-size: small;
+  font-weight: bold;
+  border-radius: 3px;
 }
 
 .buy button {
   width: fit-content;
-  height: 25px;
+  height: 100%;
   align-self: center;
   margin-left: 2px;
   border-radius: 0;
   padding: 3px 2px;
   font-size: small;
   background-color: rgba(52, 131, 250, 0.5);
+  border-radius: 3px;
+}
+
+.add {
+  font-size: small;
+  font-weight: bold;
+}
+
+.control button {
+  height: 46%;
+  width: 100%;
+  padding: 0 5px;
+  border: none;
+  color: white;
+  font-weight: 800;
+  border-radius: 3px;
 }
 
 .my-card:hover .btn {
@@ -165,17 +217,17 @@
 }
 
 .delete {
-      position: absolute;
-      top: 7%;
-      left: 1%;
-      padding: 5px;
-      border: 1px solid grey;
-      border-radius: 100%;
-      line-height: 30%;
-      width: 20px;
-      text-align: center;
-      height: 20px;
-      background-color: lightgrey;
+  position: absolute;
+  top: 7%;
+  left: 1%;
+  padding: 5px;
+  border: 1px solid grey;
+  border-radius: 100%;
+  line-height: 30%;
+  width: 20px;
+  text-align: center;
+  height: 20px;
+  background-color: lightgrey;
 }
 
 .delete:hover {

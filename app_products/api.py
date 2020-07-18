@@ -41,7 +41,8 @@ class ListAPI(generics.RetrieveAPIView):
     serializer_class = ProductSerializer
 
     def get(self, request, *args, **kwargs):
-        queryset = Product.objects.all()
+        category = kwargs["category_id"]
+        queryset = Product.objects.filter(category=category)
         return Response({"products": ProductSerializer(queryset, many=True).data})
 
 

@@ -23,8 +23,12 @@ export default function (state = initialState, action) {
     case DELETE_CART:
       return {
         ...state,
-        products: state.products.filter(item => item.id !== action.payload)
-      }
+        products: state.products.filter(
+          (item) =>
+            item.id !== action.payload.id ||
+            item.presentation.id !== action.payload.presentation
+        ),
+      };
 
     default:
       return state;

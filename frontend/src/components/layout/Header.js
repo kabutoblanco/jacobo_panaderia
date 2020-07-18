@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 //ROUTER
 import { Link } from 'react-router-dom';
 
-//FAVICON
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+//ICONS
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 //REDUX
 import { connect } from 'react-redux';
@@ -22,7 +22,6 @@ export class Header extends Component {
   };
 
   state = {
-    option: false,
     select: false,
   };
 
@@ -43,7 +42,7 @@ export class Header extends Component {
       </Button>
     );
     const guestLinks = (
-      <Nav className='justify-content-center w-100 main-menu'>
+      <Nav className='main-menu'>
         <Link
           to='/inicio'
           className={path.endsWith('inicio') ? 'active-custom' : ''}
@@ -81,7 +80,13 @@ export class Header extends Component {
           <div>
             <div className='cart'>
               <FontAwesomeIcon icon={faShoppingCart} />
-              <span className='count-cart'  style={{display: this.props.products.length > 0 ? 'inline' : 'none'}}>{this.props.products.length}</span>
+              <span
+                className='count-cart'
+                style={{
+                  display: this.props.products.length > 0 ? 'inline' : 'none',
+                }}>
+                {this.props.products.length}
+              </span>
             </div>
           </div>
         </Link>

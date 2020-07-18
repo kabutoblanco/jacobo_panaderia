@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager
 from django.utils.translation import ugettext_lazy as _
-from ..app_products.models import Product
+from ..app_products.models import Product, ProductPresentation
 
 
 # Create your models here.
@@ -42,7 +42,7 @@ class Inventory(models.Model):
 class Action(models.Model):
     TYPE_CHOICES = ((1, _("CONTADO")), (2, _("CREDITO")), (3, _("MIXTO")))
 
-    client = models.CharField(max_length=24)
+    agent = models.CharField(max_length=24)
     price = models.FloatField(default=0.0)
     price_partial = models.FloatField(default=0.0)
     date = models.DateTimeField(auto_now=True)
@@ -53,10 +53,14 @@ class Action(models.Model):
     def __str__(self):
         return "{}".format(self.price)
 
+    class Meta:
+        abstract = True
+
     
-class ProductAction(models.Model):
+class ActionProduct(models.Model):
     action = models.ForeignKey(Action, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    presentation = models.ForeignKey(ProductPresentation, on_delete=models.CASCADE)
     amount = models.FloatField(default=0.0)
     price = models.FloatField(default=0.0)
 
@@ -67,7 +71,7 @@ class ProductAction(models.Model):
 class Sale(Action):
     TYPE_CHOICES = ((1, _("LOCAL")), (2, _("DOMICILIO"))))
 
-    code = models.CharField(max_length=12)   
+    invoice = models.CharField(max_length=32)
     type = models.IntegerField(choices=TYPE_CHOICES, default=1)
 
     class Meta:
@@ -76,7 +80,7 @@ class Sale(Action):
 
 
 class Buy(Action):
-    code = models.CharField(max_length=12)
+    invoice = models.CharField(max_length=32)
 
     class Meta:
         verbose_name = "Compra"

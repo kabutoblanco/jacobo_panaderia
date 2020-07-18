@@ -2,18 +2,11 @@ import React, { Component, Fragment } from 'react';
 import ReactDOM from 'react-dom';
 
 //ROUTER
-import {
-  HashRouter as Router,
-  Route,
-  Switch,
-  Redirect,
-} from 'react-router-dom';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 
 //AUTHENTICATION
 import Login from './accounts/Login';
 import PrivateRoute from './common/PrivateRoute';
-
-//STORE
 
 //ADMINISTRATION
 import Alerts from './layout/Alerts';
@@ -23,18 +16,14 @@ import Footer from './layout/Footer';
 import Header from './layout/Header';
 
 //STORE
-import Bread from '../components/common/store/Bread';
-import Cake from '../components/common/store/Cake';
-import Cookie from '../components/common/store/Cookie';
-import Favorites from '../components/common/store/Favorites';
-import Cart from '../components/common/store/Cart';
-import Home from '../components/common/Home';
+import Store from './store/Store';
+import Cart from './cart/Cart';
+import Home from './common/Home';
 
 //REDUX
-import store from '../store';
 import { loadUser } from '../actions/auth';
-import { getProducts } from '../actions/inventory';
 import { Provider } from 'react-redux';
+import store from '../store';
 
 //ALERTS
 import { Provider as AlertProvider } from 'react-alert';
@@ -56,7 +45,6 @@ class App extends Component {
 
   componentDidMount() {
     store.dispatch(loadUser());
-    store.dispatch(getProducts());
     this.handleResize();
     window.addEventListener('resize', this.handleResize.bind(this));
   }
@@ -84,10 +72,9 @@ class App extends Component {
               <Header />
               <Container
                 fluid
-                className='p-0 app-main'
+                className='app-main'
                 style={{
                   minHeight: height + 'px',
-                  height: 'fit-content',
                 }}>
                 <Switch>
                   <PrivateRoute exact path='/' component={Dashboard} />
@@ -96,10 +83,11 @@ class App extends Component {
                     path='/inicio'
                     render={() => <Home height={height} />}
                   />
-                  <Route exact path='/favoritos' component={Favorites} />
-                  <Route exact path='/panes' component={Bread} />
-                  <Route exact path='/pasteles' component={Cake} />
-                  <Route exact path='/galletas' component={Cookie} />
+                  <Route
+                    exact
+                    path={['/favoritos', '/panes', '/pasteles', '/galletas']}
+                    component={Store}
+                  />
                   <Route exact path='/carro' component={Cart} />
                   <Route exact path='/login' component={Login} />
                 </Switch>

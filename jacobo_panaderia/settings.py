@@ -25,7 +25,7 @@ SECRET_KEY = "!ol^_5@lax80!&jly^r5*((9cqb0(hb=q66w7mg+j45l9m2#+u"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['mdquilindo.pythonanywhere.com']
+ALLOWED_HOSTS = ['mdquilindo.pythonanywhere.com', 'localhost']
 
 
 # Application definition
@@ -121,5 +121,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")

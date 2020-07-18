@@ -1,0 +1,10 @@
+.main-logo {
+  display: block;
+  margin: 10px auto;
+}
+
+@media only screen and (max-width: 740px) {
+  .main-logo {
+    padding: 0 10px;
+  }
+}
