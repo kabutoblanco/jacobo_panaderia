@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Product from './Product';
 import './Cart.css';
+import CurrencyFormat from 'react-currency-format';
 import { Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -56,17 +57,21 @@ export class Cart extends Component {
               {this.props.products.length === 0 ? (
                 <span className='p-2'>Carrito vacio</span>
               ) : (
-                <Table responsive>
-                  <thead>
-                    <tr>
-                      <th>Producto</th>
-                      <th>Precio</th>
-                      <th>Cantidad</th>
-                      <th>Subtotal</th>
-                    </tr>
-                  </thead>
-                  <tbody>{products}</tbody>
-                </Table>
+                <div
+                  className='table-responsive'
+                  style={{ maxHeight: this.props.height * 0.80 + 'px' }}>
+                  <Table striped bordered hover>
+                    <thead>
+                      <tr>
+                        <th>Producto</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Subtotal</th>
+                      </tr>
+                    </thead>
+                    <tbody>{products}</tbody>
+                  </Table>
+                </div>
               )}
             </div>
             <div className='col-md-4 p-0'>
@@ -76,20 +81,20 @@ export class Cart extends Component {
                     <span className='d-block'>
                       Subtotal{' '}
                       <span className='float-right'>
-                        ${this.state.price_subtotal}
+                        <CurrencyFormat value={this.state.price_subtotal} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                       </span>
                     </span>
                     <span className='d-block'>
                       Envio{' '}
                       <span className='float-right'>
-                        ${this.state.price_shipping}
+                        <CurrencyFormat value={this.state.price_shipping} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                       </span>
                     </span>
                     <hr />
                     <span className='d-block total'>
                       Total{' '}
                       <span className='float-right'>
-                        ${this.state.price_total}
+                      <CurrencyFormat value={this.state.price_total} displayType={'text'} thousandSeparator={true} prefix={'$'} />
                       </span>
                     </span>
                     <button className='btn btn-primary mt-3 w-100'>

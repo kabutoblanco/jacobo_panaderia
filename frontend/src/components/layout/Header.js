@@ -77,17 +77,15 @@ export class Header extends Component {
           to='/carro'
           className={path.endsWith('carro') ? 'active-custom' : ''}
           onClick={this.onLink}>
-          <div>
-            <div className='cart'>
-              <FontAwesomeIcon icon={faShoppingCart} />
-              <span
-                className='count-cart'
-                style={{
-                  display: this.props.products.length > 0 ? 'inline' : 'none',
-                }}>
-                {this.props.products.length}
-              </span>
-            </div>
+          <div className='cart cart-inner'>
+            <FontAwesomeIcon icon={faShoppingCart} />
+            <span
+              className='count-cart'
+              style={{
+                display: this.props.products.length > 0 ? 'inline' : 'none',
+              }}>
+              {this.props.products.length}
+            </span>
           </div>
         </Link>
       </Nav>
@@ -99,6 +97,21 @@ export class Header extends Component {
             aria-controls='main-nav'
             onClick={() => this.setState({ select: !this.state.select })}
           />
+          <Link
+            to='/carro'
+            className={path.endsWith('carro') ? 'active-custom' : ''}
+            onClick={this.onLink}>
+            <div className='cart cart-top'>
+              <FontAwesomeIcon icon={faShoppingCart} />
+              <span
+                className='count-cart'
+                style={{
+                  display: this.props.products.length > 0 ? 'inline' : 'none',
+                }}>
+                {this.props.products.length}
+              </span>
+            </div>
+          </Link>
           <Navbar.Collapse id='main-nav'>
             {isAuthenticated ? authLinks : guestLinks}
           </Navbar.Collapse>

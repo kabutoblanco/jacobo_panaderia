@@ -49,7 +49,7 @@ export class Store extends Component {
     return (
       <div className='container'>
         <div className='pt-5 pb-5'>
-          <h4 className='ml-a'>Panes</h4>
+          <h4 className='ml-a' style={{textTransform: 'uppercase'}}>{this.props.match.path.slice(1)}</h4>
           <div className='my-row'>{products}</div>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import CurrencyFormat from 'react-currency-format';
 import { setCart, deleteCart } from '../../actions/cart';
 import { connect } from 'react-redux';
 
@@ -21,6 +22,17 @@ export class Product extends Component {
         }
       }
     );
+  };
+
+  onMore = () => {
+    const { amount } = this.state;
+    this.setState({ amount: amount + 1 }, () => this.onSetCart());
+  };
+
+  onRest = () => {
+    const { amount } = this.state;
+    if (amount - 1 < 1) this.setState({ amount: 1 });
+    else this.setState({ amount: amount - 1 }, () => this.onSetCart());
   };
 
   onSetCart = () => {
@@ -49,28 +61,40 @@ export class Product extends Component {
   render() {
     return (
       <>
-        <td className='d-flex' style={{ border: 'none' }}>
-          <div className='my-card-body position-relative'>
-            <img
-              className='img-fluid'
-              style={{ maxWidth: '100px' }}
-              src={this.props.product.image}
-              alt=''
-            />
-            <div className='delete' onClick={this.onDeleteCart}>
-              x
+        <td>
+          <div className='d-flex'>
+            <div className='my-card-body position-relative'>
+              <img
+                className='img-fluid'
+                style={{ maxWidth: '100px' }}
+                src={this.props.product.image}
+                alt=''
+              />
+              <div className='delete' onClick={this.onDeleteCart}>
+                x
+              </div>
             </div>
-          </div>
-          <div className='card-footer d-flex' style={{maxWidth: '100px'}}>
-            <div className='about-cart d-flex'>
-              <span className='align-self-center text-over'>
-                {this.props.product.name}
-              </span>
+            <div
+              className='card-footer d-flex'
+              style={{
+                minWidth: '100px',
+                backgroundColor: 'initial',
+                color: 'black',
+                border: 'none',
+                fontWeight: 'bold',
+              }}>
+              <div className='about-cart d-flex'>
+                <span className='align-self-center text-over'>
+                  {this.props.product.name +
+                    ' ' +
+                    this.props.product.presentation.presentation.name}
+                </span>
+              </div>
             </div>
           </div>
         </td>
         <td>
-          <span>${this.props.product.price_sale}</span>
+          <span><CurrencyFormat value={this.props.product.price_sale} displayType={'text'} thousandSeparator={true} prefix={'$'} /></span>
         </td>
         <td>
           <div className='buy-cart'>
@@ -91,7 +115,7 @@ export class Product extends Component {
         </td>
         <td>
           <span className='d-inline align-self-center'>
-            ${this.state.total}
+          <CurrencyFormat value={this.state.total} displayType={'text'} thousandSeparator={true} prefix={'$'} />
           </span>
         </td>
       </>

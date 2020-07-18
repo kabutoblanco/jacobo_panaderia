@@ -9,10 +9,16 @@
   background-color: #f2ac29 !important;
 }
 
+
 .main-menu a {
   color: rgb(120, 74, 71);
   margin: auto 12px;
   text-decoration: none;
+  text-transform: uppercase;
+}
+
+.cart {
+  color: rgb(120, 74, 71);
 }
 
 .main-menu a:hover {
@@ -48,4 +54,39 @@
   top: 0;
   text-align: center;
   right: 0;
+}
+
+@media only screen and (min-width: 575px) {
+  .cart-top {
+    display: none;
+  }
+
+  .cart-inner {
+    display: inline;
+  }
+
+  .cart-top .fa-w-18 {
+    width: 1.35rem;
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .cart-top {
+    display: inline;
+    position: absolute;
+    right: 11px;
+    top: 15px;
+  }
+
+  .main-menu {
+    text-align: center;
+  }
+
+  .cart-inner {
+    display: none;
+  }
+
+  .navbar-toggler {
+    margin: auto;
+  }
 }

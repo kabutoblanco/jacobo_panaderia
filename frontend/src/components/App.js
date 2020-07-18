@@ -41,6 +41,7 @@ const alertOptions = {
 class App extends Component {
   state = {
     height: 0,
+    width: 0,
   };
 
   componentDidMount() {
@@ -57,11 +58,12 @@ class App extends Component {
     const hBanner = document.getElementById('banner').clientHeight;
     const hNavbar = document.getElementById('nav-top').clientHeight;
     const hWindow = window.innerHeight;
-    this.setState({ height: hWindow - hBanner - hNavbar });
+    const wWindow = window.innerWidth;
+    this.setState({ height: hWindow - hBanner - hNavbar, width: wWindow });
   };
 
   render() {
-    const { height } = this.state;
+    const { height, width } = this.state;
     return (
       <Provider store={store}>
         <AlertProvider template={AlertTemplate} {...alertOptions}>
@@ -69,7 +71,7 @@ class App extends Component {
             <Fragment>
               <Alerts />
               <Banner />
-              <Header />
+              <Header width={width} />
               <Container
                 fluid
                 className='app-main'
@@ -88,7 +90,11 @@ class App extends Component {
                     path={['/favoritos', '/panes', '/pasteles', '/galletas']}
                     component={Store}
                   />
-                  <Route exact path='/carro' component={Cart} />
+                  <Route
+                    exact
+                    path='/carro'
+                    render={() => <Cart height={height} />}
+                  />
                   <Route exact path='/login' component={Login} />
                 </Switch>
               </Container>
