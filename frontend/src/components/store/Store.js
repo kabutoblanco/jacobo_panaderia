@@ -16,16 +16,16 @@ export class Store extends Component {
   onUpdateProducts = (path) => {
     switch (path) {
       case '/favoritos':
-        this.props.getProducts(1);
+        this.props.getProducts('pan');
         break;
       case '/panes':
-        this.props.getProducts(1);
+        this.props.getProducts('pan');
         break;
       case '/pasteles':
-        this.props.getProducts(2);
+        this.props.getProducts('pastel');
         break;
       case '/galletas':
-        this.props.getProducts(3);
+        this.props.getProducts('galleta');
         break;
       default:
         break;

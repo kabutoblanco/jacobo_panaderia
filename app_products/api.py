@@ -1,7 +1,14 @@
 from rest_framework import generics, permissions
 from rest_framework.response import Response
-from .models import Product
-from .serializers import ProductSerializer, RegisterSerializer, UpdateSerializer
+from .models import Product, ProductPresentation
+from .serializers import (
+    ProductSerializer,
+    RegisterSerializer,
+    UpdateSerializer,
+    ProductPresentationSerializer,
+)
+
+import json
 
 
 class RegisterAPI(generics.GenericAPIView):
@@ -41,8 +48,8 @@ class ListAPI(generics.RetrieveAPIView):
     serializer_class = ProductSerializer
 
     def get(self, request, *args, **kwargs):
-        category = kwargs["category_id"]
-        queryset = Product.objects.filter(category=category)
+        category = kwargs["category"]
+        queryset = Product.objects.filter(category__name=category)
         return Response({"products": ProductSerializer(queryset, many=True).data})
 
 
@@ -50,11 +57,8 @@ class ProductAPI(generics.RetrieveAPIView):
     serializer_class = ProductSerializer
 
     def get(self, request, *args, **kwargs):
-        product = Product.objects.get(pk=request.data["id"])
+        ids = json.loads(kwargs["products"])
+        queryset = ProductPresentation.objects.filter(presentation__in=ids)
         return Response(
-            {
-                "products": ProductSerializer(
-                    product, context=self.get_serializer_context()
-                ).data
-            }
+            {"products": ProductPresentationSerializer(queryset, many=True).data}
         )

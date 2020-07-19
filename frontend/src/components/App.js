@@ -22,6 +22,7 @@ import Home from './common/Home';
 
 //REDUX
 import { loadUser } from '../actions/auth';
+import { loadCart } from '../actions/cart';
 import { Provider } from 'react-redux';
 import store from '../store';
 
@@ -46,6 +47,7 @@ class App extends Component {
 
   componentDidMount() {
     store.dispatch(loadUser());
+    store.dispatch(loadCart());
     this.handleResize();
     window.addEventListener('resize', this.handleResize.bind(this));
   }

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Carousel, Button, Jumbotron } from 'react-bootstrap';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import './Common.css';
 
 export class Home extends Component {
@@ -11,22 +12,28 @@ export class Home extends Component {
     return (
       <Carousel style={{ height: height + 'px' }}>
         <Carousel.Item>
-          <img
+          <LazyLoadImage
+            effect='blur'
             className='d-block w-100'
             src='../../../static/frontend/img/galleta2.jpg'
             alt='First slide'
             height={height}
           />
           <Carousel.Caption>
-            <h3 style={{color: 'white', textShadow: '0 0 5px #000'}}>HASTA 25% DE DESCUENTO POR COMPRAS ON-LINE</h3>
-            <p style={{color: 'black', textShadow: '0 0 5px #fff'}}>No aplica para productos de tienda.</p>
+            <h3 style={{ color: 'white', textShadow: '0 0 5px #000' }}>
+              HASTA 25% DE DESCUENTO POR COMPRAS ON-LINE
+            </h3>
+            <p style={{ color: 'black', textShadow: '0 0 5px #fff' }}>
+              No aplica para productos de tienda.
+            </p>
             <Link to='/favoritos'>
               <Button>ORDENA AHORA</Button>
             </Link>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
-          <img
+          <LazyLoadImage
+            effect='blur'
             className='d-block w-100'
             src='../../../static/frontend/img/pan1.jpg'
             alt='Third slide'
@@ -42,7 +49,8 @@ export class Home extends Component {
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
-          <img
+          <LazyLoadImage
+            effect='blur'
             className='d-block w-100'
             src='../../../static/frontend/img/galleta1.jpg'
             alt='Third slide'

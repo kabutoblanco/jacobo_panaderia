@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 
 //STYLESS
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 export class Product extends Component {
   static propTypes = {
@@ -90,7 +91,12 @@ export class Product extends Component {
     return (
       <div className='my-card'>
         <div className='my-card-body'>
-          <img className='img-fluid' src={this.props.product.image} alt='' />
+          <LazyLoadImage
+            className='img-fluid'
+            effect='opacity'
+            src={this.props.product.image}
+            alt=''
+          />
         </div>
         <div className='card-footer'>
           <div className='about'>

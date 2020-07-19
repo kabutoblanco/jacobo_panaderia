@@ -40,12 +40,10 @@ export class Cart extends Component {
   }
 
   render() {
+    console.log(this.props.products);
     const products = this.props.products.map((product) => (
-      <tr key={product.id.toString() + product.presentation.id.toString()}>
-        <Product
-          key={product.id.toString() + product.presentation.id.toString()}
-          product={product}
-        />
+      <tr key={product.presentation.id}>
+        <Product product={product} />
       </tr>
     ));
     return (
@@ -59,7 +57,7 @@ export class Cart extends Component {
               ) : (
                 <div
                   className='table-responsive'
-                  style={{ maxHeight: this.props.height * 0.80 + 'px' }}>
+                  style={{ maxHeight: this.props.height * 0.8 + 'px' }}>
                   <Table striped bordered hover>
                     <thead>
                       <tr>
@@ -81,20 +79,35 @@ export class Cart extends Component {
                     <span className='d-block'>
                       Subtotal{' '}
                       <span className='float-right'>
-                        <CurrencyFormat value={this.state.price_subtotal} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                        <CurrencyFormat
+                          value={this.state.price_subtotal}
+                          displayType={'text'}
+                          thousandSeparator={true}
+                          prefix={'$'}
+                        />
                       </span>
                     </span>
                     <span className='d-block'>
                       Envio{' '}
                       <span className='float-right'>
-                        <CurrencyFormat value={this.state.price_shipping} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                        <CurrencyFormat
+                          value={this.state.price_shipping}
+                          displayType={'text'}
+                          thousandSeparator={true}
+                          prefix={'$'}
+                        />
                       </span>
                     </span>
                     <hr />
                     <span className='d-block total'>
                       Total{' '}
                       <span className='float-right'>
-                      <CurrencyFormat value={this.state.price_total} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+                        <CurrencyFormat
+                          value={this.state.price_total}
+                          displayType={'text'}
+                          thousandSeparator={true}
+                          prefix={'$'}
+                        />
                       </span>
                     </span>
                     <button className='btn btn-primary mt-3 w-100'>

@@ -3,11 +3,13 @@ import React, { Component } from 'react';
 import CurrencyFormat from 'react-currency-format';
 import { setCart, deleteCart } from '../../actions/cart';
 import { connect } from 'react-redux';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 export class Product extends Component {
   state = {
     amount: this.props.product.amount,
-    total: this.props.product.total,
+    total:
+      this.props.product.amount * this.props.product.presentation.price_sale,
   };
 
   onChange = (event) => {
@@ -38,7 +40,7 @@ export class Product extends Component {
   onSetCart = () => {
     this.setState(
       {
-        total: this.state.amount * this.props.product.price_sale,
+        total: this.state.amount * this.props.product.presentation.price_sale,
       },
       () => {
         this.props.product.amount = this.state.amount;
@@ -64,7 +66,8 @@ export class Product extends Component {
         <td>
           <div className='d-flex'>
             <div className='my-card-body position-relative'>
-              <img
+              <LazyLoadImage
+                effect='blur'
                 className='img-fluid'
                 style={{ maxWidth: '100px' }}
                 src={this.props.product.image}
@@ -94,7 +97,14 @@ export class Product extends Component {
           </div>
         </td>
         <td>
-          <span><CurrencyFormat value={this.props.product.price_sale} displayType={'text'} thousandSeparator={true} prefix={'$'} /></span>
+          <span>
+            <CurrencyFormat
+              value={this.props.product.presentation.price_sale}
+              displayType={'text'}
+              thousandSeparator={true}
+              prefix={'$'}
+            />
+          </span>
         </td>
         <td>
           <div className='buy-cart'>
@@ -115,7 +125,12 @@ export class Product extends Component {
         </td>
         <td>
           <span className='d-inline align-self-center'>
-          <CurrencyFormat value={this.state.total} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+            <CurrencyFormat
+              value={this.state.total}
+              displayType={'text'}
+              thousandSeparator={true}
+              prefix={'$'}
+            />
           </span>
         </td>
       </>
