@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment, Suspense, lazy } from 'react';
 import ReactDOM from 'react-dom';
 
 //ROUTER
@@ -16,9 +16,13 @@ import Footer from './layout/Footer';
 import Header from './layout/Header';
 
 //STORE
-import Store from './store/Store';
-import Cart from './cart/Cart';
-import Home from './common/Home';
+const Store = lazy(() => import('./store/Store'));
+const Cart = lazy(() => import('./cart/Cart'));
+const Home = lazy(() => import('./common/Home'));
+
+// import Store from './store/Store'
+// import Cart from './cart/Cart'
+// import Home from './common/Home'
 
 //REDUX
 import { loadUser } from '../actions/auth';
@@ -70,38 +74,40 @@ class App extends Component {
       <Provider store={store}>
         <AlertProvider template={AlertTemplate} {...alertOptions}>
           <Router>
-            <Fragment>
-              <Alerts />
-              <Banner />
-              <Header width={width} />
-              <Container
-                fluid
-                className='app-main'
-                style={{
-                  minHeight: height + 'px',
-                }}>
-                <Switch>
-                  <PrivateRoute exact path='/' component={Dashboard} />
-                  <Route
-                    exact
-                    path='/inicio'
-                    render={() => <Home height={height} />}
-                  />
-                  <Route
-                    exact
-                    path={['/favoritos', '/panes', '/pasteles', '/galletas']}
-                    component={Store}
-                  />
-                  <Route
-                    exact
-                    path='/carro'
-                    render={() => <Cart height={height} />}
-                  />
-                  <Route exact path='/login' component={Login} />
-                </Switch>
-              </Container>
-              <Footer />
-            </Fragment>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Fragment>
+                <Alerts />
+                <Banner />
+                <Header width={width} />
+                <Container
+                  fluid
+                  className='app-main'
+                  style={{
+                    minHeight: height + 'px',
+                  }}>
+                  <Switch>
+                    <PrivateRoute exact path='/' component={Dashboard} />
+                    <Route
+                      exact
+                      path='/inicio'
+                      render={() => <Home height={height} />}
+                    />
+                    <Route
+                      exact
+                      path={['/favoritos', '/panes', '/pasteles', '/galletas']}
+                      component={Store}
+                    />
+                    <Route
+                      exact
+                      path='/carro'
+                      render={() => <Cart height={height} />}
+                    />
+                    <Route exact path='/login' component={Login} />
+                  </Switch>
+                </Container>
+                <Footer />
+              </Fragment>
+            </Suspense>
           </Router>
         </AlertProvider>
       </Provider>

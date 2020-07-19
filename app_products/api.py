@@ -58,7 +58,7 @@ class ProductAPI(generics.RetrieveAPIView):
 
     def get(self, request, *args, **kwargs):
         ids = json.loads(kwargs["products"])
-        queryset = ProductPresentation.objects.filter(presentation__in=ids)
+        queryset = ProductPresentation.objects.filter(id__in=ids)
         return Response(
             {"products": ProductPresentationSerializer(queryset, many=True).data}
         )
