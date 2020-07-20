@@ -13,28 +13,37 @@ export class Product extends Component {
   };
 
   onChange = (event) => {
-    const { name } = event.target;
+    const { name, value } = event.target;
     this.setState(
       {
         [event.target.name]: event.target.value,
       },
       () => {
         if (name === 'amount') {
+          if (value < 0) this.setState({ amount: 1 }, () => this.onSetCart());
           this.onSetCart();
         }
       }
     );
   };
 
+  onBlur = (event) => {
+    const { name, value } = event.target;
+    if (name === 'amount' && (value === '' || value < 1)) {
+      this.setState({ amount: 1 }, () => this.onSetCart());
+    }
+  };
+
   onMore = () => {
     const { amount } = this.state;
-    this.setState({ amount: amount + 1 }, () => this.onSetCart());
+    this.setState({ amount: parseInt(amount) + 1 }, () => this.onSetCart());
   };
 
   onRest = () => {
     const { amount } = this.state;
     if (amount - 1 < 1) this.setState({ amount: 1 });
-    else this.setState({ amount: amount - 1 }, () => this.onSetCart());
+    else
+      this.setState({ amount: parseInt(amount) - 1 }, () => this.onSetCart());
   };
 
   onSetCart = () => {
@@ -115,6 +124,7 @@ export class Product extends Component {
                 id=''
                 value={this.state.amount}
                 onChange={this.onChange}
+                onBlur={this.onBlur}
               />
               <div className='control'>
                 <button onClick={this.onMore}>+</button>

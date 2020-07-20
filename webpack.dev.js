@@ -3,14 +3,12 @@ const path = require('path');
 module.exports = {
   mode: 'development',
   entry: {
-    main: './frontend/src/index.js',
-    store: './frontend/src/components/store/Store.js',
-    cart: './frontend/src/components/cart/Cart.js',
-    home: './frontend/src/components/common/Home.js',
+    index: './frontend/src/index.js',
   },
   output: {
-    chunkFilename: '[name].js',
+    chunkFilename: '[id].js',
     path: path.resolve(__dirname, './frontend/static/frontend'),
+    publicPath: '/static/frontend/',
   },
   module: {
     rules: [
