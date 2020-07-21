@@ -11,7 +11,7 @@ export class Banner extends Component {
         <div id='banner' className='banner'>
           <Row className='m-auto'>
             <img
-              src='../../../static/frontend/img/logo.webp'
+              src='/static/frontend/img/logo.webp'
               width={124 * 3.25}
               height={42 * 3.25}
               className='main-logo img-fluid'

@@ -51,12 +51,10 @@ class App extends Component {
     store.dispatch(loadCart());
     this.handleResize();
     window.addEventListener('resize', this.handleResize.bind(this));
-    window.addEventListener('load', this.handleResize.bind(this));
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleResize.bind(this));
-    window.removeEventListener('load', this.handleResize.bind(this));
   }
 
   handleResize = () => {
@@ -75,11 +73,11 @@ class App extends Component {
       <Provider store={store}>
         <AlertProvider template={AlertTemplate} {...alertOptions}>
           <Router>
+            <Banner />
+            <Header />
             <Suspense fallback={<div>Loading...</div>}>
               <Fragment>
                 <Alerts />
-                <Banner />
-                <Header />
                 <Container
                   fluid
                   className='app-main'
