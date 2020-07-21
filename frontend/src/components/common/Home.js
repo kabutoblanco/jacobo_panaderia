@@ -15,7 +15,7 @@ export class Home extends Component {
           <LazyLoadImage
             effect='blur'
             className='d-block w-100'
-            src='../../../static/frontend/img/galleta2.jpg'
+            src='../../../static/frontend/img/galleta2.webp'
             alt='First slide'
             height={height}
           />
@@ -35,7 +35,7 @@ export class Home extends Component {
           <LazyLoadImage
             effect='blur'
             className='d-block w-100'
-            src='../../../static/frontend/img/pan1.jpg'
+            src='../../../static/frontend/img/pan1.webp'
             alt='Third slide'
             height={height}
           />
@@ -52,7 +52,7 @@ export class Home extends Component {
           <LazyLoadImage
             effect='blur'
             className='d-block w-100'
-            src='../../../static/frontend/img/galleta1.jpg'
+            src='../../../static/frontend/img/galleta1.webp'
             alt='Third slide'
             height={height}
           />

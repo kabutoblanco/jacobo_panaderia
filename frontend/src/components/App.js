@@ -5,24 +5,20 @@ import ReactDOM from 'react-dom';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 
 //AUTHENTICATION
-import Login from './accounts/Login';
-import PrivateRoute from './common/PrivateRoute';
+const Login = lazy(() => import('./accounts/Login'));
+const PrivateRoute = lazy(() => import('./common/PrivateRoute'));
 
 //ADMINISTRATION
-import Alerts from './layout/Alerts';
+const Alerts = lazy(() => import('./layout/Alerts'));
 import Banner from './layout/Banner';
-import Dashboard from './common/Dashboard';
-import Footer from './layout/Footer';
 import Header from './layout/Header';
+const Dashboard = lazy(() => import('./common/Dashboard'));
+const Footer = lazy(() => import('./layout/Footer'));
 
 //STORE
 const Store = lazy(() => import('./store/Store'));
 const Cart = lazy(() => import('./cart/Cart'));
 const Home = lazy(() => import('./common/Home'));
-
-// import Store from './store/Store'
-// import Cart from './cart/Cart'
-// import Home from './common/Home'
 
 //REDUX
 import { loadUser } from '../actions/auth';
