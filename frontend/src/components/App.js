@@ -12,6 +12,8 @@ const PrivateRoute = lazy(() => import('./common/PrivateRoute'));
 const Alerts = lazy(() => import('./layout/Alerts'));
 import Banner from './layout/Banner';
 import Header from './layout/Header';
+// const Banner = lazy(() => import('./layout/Banner'));
+// const Header = lazy(() => import('./layout/Header'));
 const Dashboard = lazy(() => import('./common/Dashboard'));
 const Footer = lazy(() => import('./layout/Footer'));
 
@@ -42,7 +44,6 @@ const alertOptions = {
 class App extends Component {
   state = {
     height: 0,
-    width: 0,
   };
 
   componentDidMount() {
@@ -50,22 +51,26 @@ class App extends Component {
     store.dispatch(loadCart());
     this.handleResize();
     window.addEventListener('resize', this.handleResize.bind(this));
+    window.addEventListener('load', this.handleResize.bind(this));
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleResize.bind(this));
+    window.removeEventListener('load', this.handleResize.bind(this));
   }
 
   handleResize = () => {
+    console.log(document.getElementById('banner'));
+
     const hBanner = document.getElementById('banner').clientHeight;
     const hNavbar = document.getElementById('nav-top').clientHeight;
     const hWindow = window.innerHeight;
-    const wWindow = window.innerWidth;
-    this.setState({ height: hWindow - hBanner - hNavbar, width: wWindow });
+    console.log(hBanner + hNavbar);
+    this.setState({ height: hWindow - hBanner - hNavbar });
   };
 
   render() {
-    const { height, width } = this.state;
+    const { height } = this.state;
     return (
       <Provider store={store}>
         <AlertProvider template={AlertTemplate} {...alertOptions}>
@@ -74,7 +79,7 @@ class App extends Component {
               <Fragment>
                 <Alerts />
                 <Banner />
-                <Header width={width} />
+                <Header />
                 <Container
                   fluid
                   className='app-main'

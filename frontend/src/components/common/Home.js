@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { Link } from 'react-router-dom';
 
-import { Carousel, Button, Jumbotron } from 'react-bootstrap';
+import { Carousel, Button } from 'react-bootstrap';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import './Common.css';
 
