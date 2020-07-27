@@ -1,12 +1,33 @@
 import React, { Component } from 'react';
 
-import { Nav }  from 'react-bootstrap'
+import { Nav } from 'react-bootstrap';
 
 export class NavLateral extends Component {
   render() {
     return (
-      <Nav defaultActiveKey='/home' className='flex-column'>
+      <Nav
+        defaultActiveKey='/home'
+        className='flex-column'
+        style={{
+          height: this.props.height,
+          overflow: 'auto',
+          width: 'max-content',
+          flexWrap: 'nowrap',
+        }}
+      >
         <Nav.Link href='/home'>Home</Nav.Link>
+        <Nav.Link eventKey='link-1'>Productos</Nav.Link>
+        <Nav.Link eventKey='link-2'>Balance</Nav.Link>
+        <Nav.Link eventKey='link-1'>Productos</Nav.Link>
+        <Nav.Link eventKey='link-2'>Balance</Nav.Link>
+        <Nav.Link eventKey='link-1'>Productos</Nav.Link>
+        <Nav.Link eventKey='link-2'>Balance</Nav.Link>
+        <Nav.Link eventKey='link-1'>Productos</Nav.Link>
+        <Nav.Link eventKey='link-2'>Balance</Nav.Link>
+        <Nav.Link eventKey='link-1'>Productos</Nav.Link>
+        <Nav.Link eventKey='link-2'>Balance</Nav.Link>
+        <Nav.Link eventKey='link-1'>Productos</Nav.Link>
+        <Nav.Link eventKey='link-2'>Balance</Nav.Link>
         <Nav.Link eventKey='link-1'>Productos</Nav.Link>
         <Nav.Link eventKey='link-2'>Balance</Nav.Link>
         <Nav.Link eventKey='disabled' disabled>

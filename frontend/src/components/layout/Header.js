@@ -38,7 +38,7 @@ export class Header extends Component {
     const { isAuthenticated } = this.props.auth;
     const { width } = this.props;
     const authLinks = (
-      <Button variant='outline-success' onClick={this.onLogout}>
+      <Button variant='outline-success' className='p-0' onClick={this.onLogout}>
         Salir
       </Button>
     );

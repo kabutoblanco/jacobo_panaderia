@@ -11,7 +11,7 @@ class Dashboard extends Component {
   render() {
     return (
       <div style={{ height: this.props.height + 'px' }}>
-        <Inventory />
+        <Inventory height={this.props.height} />
       </div>
     );
   }
