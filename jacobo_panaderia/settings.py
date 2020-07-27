@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "app_accounts",
     "app_products",
+    "app_inventories",
     "frontend",
     "rest_framework",
     "knox",

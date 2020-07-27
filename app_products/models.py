@@ -59,6 +59,7 @@ class Product(models.Model):
     image = models.FileField()
     price_buy = models.FloatField(default=0.0)
     stock = models.IntegerField(default=0)
+    capacity = models.IntegerField(default=0)
     unit_base = models.ForeignKey(Unit, on_delete=models.CASCADE)
     presentations = models.ManyToManyField(Presentation, through='ProductPresentation', through_fields=('product', 'presentation'))
     category = models.ForeignKey(Category, on_delete=models.CASCADE)

@@ -36,6 +36,7 @@ export class Header extends Component {
   render() {
     const path = window.location.hash;
     const { isAuthenticated } = this.props.auth;
+    const { width } = this.props;
     const authLinks = (
       <Button variant='outline-success' onClick={this.onLogout}>
         Salir
@@ -91,7 +92,7 @@ export class Header extends Component {
       </Nav>
     );
     return (
-      <div id='nav-top'>
+      <div id='nav-top' style={{maxHeight: '43px'}} >
         <Navbar expand='sm' expanded={this.state.select}>
           <Navbar.Toggle
             aria-controls='main-nav'
@@ -101,7 +102,11 @@ export class Header extends Component {
             to='/carro'
             className={path.endsWith('carro') ? 'active-custom' : ''}
             onClick={this.onLink}>
-            <div className='cart cart-top'>
+            <div
+              className='cart cart-top'
+              style={{
+                display: !isAuthenticated && width <= 575 ? 'inline' : 'none',
+              }}>
               <FontAwesomeIcon icon={faShoppingCart} />
               <span
                 className='count-cart'

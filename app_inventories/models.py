@@ -1,17 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager
 from django.utils.translation import ugettext_lazy as _
-from ..app_products.models import Product, ProductPresentation
+from polymorphic.models import PolymorphicModel
+from app_products.models import Product, ProductPresentation
+from app_accounts.models import User
 
 
 # Create your models here.
-class InventoryManager(BaseUserManager):
-    def create_inventory(self, validate_data):
-        inventory = Product(**validate_data)
-        inventory.save()
-        return inventory
-
-
 class SaleManager(BaseUserManager):
     def create_sale(self, validate_data):
         sale = Sale(**validate_data)
@@ -26,53 +21,81 @@ class BuyManager(BaseUserManager):
         return buy
 
 
-class Inventory(models.Model):
-    code = models.CharField(max_length=12)  
-    date_init = models.DateField()
-    date_end = models.DateField()
-
-    def __str__(self):
-        return "{}".format(self.code)
+class Duty(models.Model):
+    code = models.CharField(max_length=12, unique=True)
+    name = models.CharField(max_length=16)
+    percentage_price = models.FloatField(default=0.0)
+    fixed_price = models.FloatField(default=0.0)
 
     class Meta:
-        verbose_name = "Inventario"
-        verbose_name_plural = "Inventarios"
+        verbose_name = "Impuesto"
+        verbose_name_plural = "Impuestos"
+
+    def __str__(self):
+        return "[{}] {}".format(self.code, self.name)
 
 
-class Action(models.Model):
+class Action(PolymorphicModel):
     TYPE_CHOICES = ((1, _("CONTADO")), (2, _("CREDITO")), (3, _("MIXTO")))
 
-    agent = models.CharField(max_length=24)
-    price = models.FloatField(default=0.0)
-    price_partial = models.FloatField(default=0.0)
+    user = models.ForeignKey(User,
+                             on_delete=models.CASCADE,
+                             blank=True,
+                             null=True)
+    subtotal = models.FloatField(default=0.0)
+    total = models.FloatField(default=0.0)
     date = models.DateTimeField(auto_now=True)
     last_date = models.DateTimeField(auto_now=True)
     type = models.IntegerField(choices=TYPE_CHOICES, default=1)
-    inventory = models.ForeignKey(Inventory, on_delete=models.CASCADE)
+    duties = models.ManyToManyField(Duty, blank=True)
 
     def __str__(self):
-        return "{}".format(self.price)
+        return "[{}] {}".format(self.id, self.total)
+
+
+class Pay(models.Model):
+    TYPE_CHOICES = ((1, _("CASH")), (2, _("CREDIT_CARD")),
+                    (3, _("DEBIT_CARD")), (4, _("PSE")), (5, _("BRANCH")))
+
+    code = models.CharField(max_length=32, unique=True)
+    user = models.ForeignKey(User,
+                             on_delete=models.CASCADE,
+                             blank=True,
+                             null=True)
+    type = models.IntegerField(choices=TYPE_CHOICES, default=1)
+    payment = models.FloatField(default=0.0)
+    date = models.DateTimeField(auto_now=True)
+    action = models.ForeignKey(Action, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "[{}] {}".format(self.code, self.action)
 
     class Meta:
-        abstract = True
+        verbose_name = "Pago"
+        verbose_name_plural = "Pagos"
 
-    
-class ActionProduct(models.Model):
+
+class Detail(models.Model):
     action = models.ForeignKey(Action, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    presentation = models.ForeignKey(ProductPresentation, on_delete=models.CASCADE)
+    presentation = models.ForeignKey(ProductPresentation,
+                                     on_delete=models.CASCADE)
     amount = models.FloatField(default=0.0)
-    price = models.FloatField(default=0.0)
+    subtotal = models.FloatField(default=0.0)
 
     def __str__(self):
-        return "{}".format(self.action)
+        return "[{}] {}".format(self.id, self.product)
+
+    class Meta:
+        verbose_name = "Detalle"
+        verbose_name_plural = "Detalles"
 
 
 class Sale(Action):
-    TYPE_CHOICES = ((1, _("LOCAL")), (2, _("DOMICILIO"))))
+    TYPE_CHOICES = ((1, _("LOCAL")), (2, _("DOMICILIO")))
 
-    invoice = models.CharField(max_length=32)
-    type = models.IntegerField(choices=TYPE_CHOICES, default=1)
+    invoice = models.CharField(max_length=32, unique=True)
+    mode = models.IntegerField(choices=TYPE_CHOICES, default=1)
 
     class Meta:
         verbose_name = "Venta"
@@ -80,7 +103,7 @@ class Sale(Action):
 
 
 class Buy(Action):
-    invoice = models.CharField(max_length=32)
+    invoice = models.CharField(max_length=32, unique=True)
 
     class Meta:
         verbose_name = "Compra"

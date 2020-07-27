@@ -1,11 +1,20 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import Inventory from '../inventory/Inventory'
+import Inventory from '../inventory/Inventory';
 
 class Dashboard extends Component {
-    render() {
-        return <Inventory></Inventory>
-    }
+  componentDidMount() {
+    console.log('excelente');
+
+    console.log(this.props.height + 'bien');
+  }
+  render() {
+    return (
+      <div style={{ height: this.props.height + 'px' }}>
+        <Inventory />
+      </div>
+    );
+  }
 }
 
 export default Dashboard;

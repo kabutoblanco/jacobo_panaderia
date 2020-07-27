@@ -16,7 +16,7 @@ export class Inventory extends Component {
     return (
       <Fragment>
         <Tab.Container id='left-tabs-example' defaultActiveKey='first'>
-          <Row className='w-100'>
+          <Row className='w-100 h-100'>
             <Col sm={3}>
               <Nav variant='pills' className='flex-column'>
                 <Nav.Item>

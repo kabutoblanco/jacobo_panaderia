@@ -6,12 +6,14 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => (
   <Route
     {...rest}
     render={(props) => {
+      console.log(rest);
+
       if (auth.isLoading) {
         return <h2>Loading...</h2>;
       } else if (!auth.isAuthenticated) {
         return <Redirect to='/inicio' />;
       } else {
-        return <Component {...props} />;
+        return <Component {...props} height={rest.height} />;
       }
     }}
   />

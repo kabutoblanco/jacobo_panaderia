@@ -43,7 +43,9 @@ const alertOptions = {
 
 class App extends Component {
   state = {
+    hWindow: 0,
     height: 0,
+    width: 0,
   };
 
   componentDidMount() {
@@ -58,23 +60,31 @@ class App extends Component {
   }
 
   handleResize = () => {
-    console.log(document.getElementById('banner'));
-
     const hBanner = document.getElementById('banner').clientHeight;
     const hNavbar = document.getElementById('nav-top').clientHeight;
     const hWindow = window.innerHeight;
-    console.log(hBanner + hNavbar);
-    this.setState({ height: hWindow - hBanner - hNavbar });
+    const wWindow = window.innerWidth;
+    console.log(hWindow);
+    console.log(hNavbar);
+    console.log(hWindow - hNavbar);
+    const height = hWindow - hNavbar;
+    
+    this.setState({
+      height: hWindow - hBanner - hNavbar,      
+      width: wWindow,
+      hWindow: height,
+    });
   };
 
   render() {
-    const { height } = this.state;
+    const { height, width, hWindow } = this.state;
+
     return (
       <Provider store={store}>
         <AlertProvider template={AlertTemplate} {...alertOptions}>
           <Router>
             <Banner />
-            <Header />
+            <Header width={width}/>
             <Suspense fallback={<div>Loading...</div>}>
               <Fragment>
                 <Alerts />
@@ -85,7 +95,12 @@ class App extends Component {
                     minHeight: height + 'px',
                   }}>
                   <Switch>
-                    <PrivateRoute exact path='/' component={Dashboard} />
+                    <PrivateRoute
+                      exact
+                      path='/'
+                      component={Dashboard}
+                      height={hWindow}
+                    />
                     <Route
                       exact
                       path='/inicio'
