@@ -1,17 +1,28 @@
 import React, { Component } from 'react';
 
-import Inventory from '../inventory/Inventory';
+import Sale from '../dashboard/Sale';
+import Inventory from '../dashboard/Inventory';
 
 class Dashboard extends Component {
-  componentDidMount() {
-    console.log('excelente');
+  onUpdateProducts = () => {
+    const path = this.props.match.path;
+    switch (path) {
+      case '/ventas':
+        return <Sale />;
+      case '/compras':
+        return <p>Compras</p>;
+      case '/inventario':
+        return <Inventory />;
+      default:
+        return <></>;
+    }
+  };
 
-    console.log(this.props.height + 'bien');
-  }
   render() {
     return (
       <div style={{ height: this.props.height + 'px' }}>
-        <Inventory height={this.props.height} />
+        {/* <NavLateral height={this.props.height} /> */}
+        <this.onUpdateProducts />
       </div>
     );
   }

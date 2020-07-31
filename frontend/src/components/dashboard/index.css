@@ -1,0 +1,36 @@
+.nav-lateral {
+  overflow: auto;
+  width: max-content;
+  flex-wrap: nowrap;
+  background-color: #400808;
+  color: white;
+}
+
+.nav-lateral a {
+    padding: 7.5px 25px;
+    text-decoration: none;
+    color: white;
+}
+
+.nav-lateral a:hover {
+    font-weight: bold;
+    background-color: rgb(120, 74, 71);
+}
+
+.first-menu {
+    padding-top: 15px !important;
+}
+
+.container-overflow .row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+}
+
+.container-overflow .card {
+    width: fit-content;
+}
+
+.container-overflow .col {
+    width: 100% !important;
+    min-width: unset;
+}

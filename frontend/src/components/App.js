@@ -84,7 +84,7 @@ class App extends Component {
         <AlertProvider template={AlertTemplate} {...alertOptions}>
           <Router>
             <Banner />
-            <Header width={width}/>
+            <Header height={hWindow} width={width}/>
             <Suspense fallback={<div>Loading...</div>}>
               <Fragment>
                 <Alerts />
@@ -97,7 +97,7 @@ class App extends Component {
                   <Switch>
                     <PrivateRoute
                       exact
-                      path='/'
+                      path={['/', '/ventas', '/compras', '/inventario']}
                       component={Dashboard}
                       height={hWindow}
                     />

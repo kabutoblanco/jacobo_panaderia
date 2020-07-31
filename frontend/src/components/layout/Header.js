@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 //ROUTER
 import { Link } from 'react-router-dom';
+import NavLateral from '../dashboard/NavLateral';
 
 //ICONS
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
@@ -38,9 +39,19 @@ export class Header extends Component {
     const { isAuthenticated } = this.props.auth;
     const { width } = this.props;
     const authLinks = (
-      <Button variant='outline-success' className='p-0' onClick={this.onLogout}>
-        Salir
-      </Button>
+      <>
+        <Button
+          variant='outline-success'
+          className='p-0 btn-salir float-right'
+          onClick={this.onLogout}>
+          SALIR
+        </Button>
+        <input type='checkbox' name='' id='expand-menu' />
+        <label className='label-menu' htmlFor='expand-menu'>
+          <img src='/static/frontend/img/menu.png' height='15' alt='' />
+        </label>
+        <NavLateral height={this.props.height} />
+      </>
     );
     const guestLinks = (
       <Nav className='main-menu'>
@@ -92,12 +103,22 @@ export class Header extends Component {
       </Nav>
     );
     return (
-      <div id='nav-top' style={{maxHeight: '43px'}} >
-        <Navbar expand='sm' expanded={this.state.select}>
-          <Navbar.Toggle
-            aria-controls='main-nav'
-            onClick={() => this.setState({ select: !this.state.select })}
-          />
+      <div id='nav-top' style={{ height: '43px' }}>
+        <Navbar
+          expand='sm'
+          expanded={this.state.select}
+          style={{
+            display: isAuthenticated ? 'block' : 'flex',
+            height: isAuthenticated ? '43px' : 'auto',
+          }}>
+          {!isAuthenticated ? (
+            <Navbar.Toggle
+              aria-controls='main-nav'
+              onClick={() => this.setState({ select: !this.state.select })}
+            />
+          ) : (
+            authLinks
+          )}
           <Link
             to='/carro'
             className={path.endsWith('carro') ? 'active-custom' : ''}
@@ -118,7 +139,7 @@ export class Header extends Component {
             </div>
           </Link>
           <Navbar.Collapse id='main-nav'>
-            {isAuthenticated ? authLinks : guestLinks}
+            {isAuthenticated ? <></> : guestLinks}
           </Navbar.Collapse>
         </Navbar>
       </div>
