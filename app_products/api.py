@@ -31,7 +31,7 @@ class UpdateAPI(generics.GenericAPIView):
     serializer_class = UpdateSerializer
 
     def post(self, request, *args, **kwargs):
-        product = Product.objects.get(code=request.data["code"])
+        product = Product.objects.get(pk=request.data["id"])
         serializer = self.get_serializer(instance=product, data=request.data)
         serializer.is_valid(raise_exception=True)
         product = serializer.save()
@@ -48,16 +48,16 @@ class ListAPI(generics.RetrieveAPIView):
     serializer_class = ProductSerializer
 
     def get(self, request, *args, **kwargs):
-        category = kwargs["category"]
+        category = kwargs["name"]
         queryset = Product.objects.filter(category__name=category)
         return Response({"products": ProductSerializer(queryset, many=True).data})
 
 
-class ProductAPI(generics.RetrieveAPIView):
+class DetailCartAPI(generics.RetrieveAPIView):
     serializer_class = ProductSerializer
 
     def get(self, request, *args, **kwargs):
-        ids = json.loads(kwargs["products"])
+        ids = json.loads(kwargs["ids"])
         queryset = ProductPresentation.objects.filter(id__in=ids)
         return Response(
             {"products": ProductPresentationSerializer(queryset, many=True).data}

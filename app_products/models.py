@@ -56,7 +56,8 @@ class Presentation(models.Model):
 class Product(models.Model):
     ref = models.CharField(max_length=12, unique=True)
     name = models.CharField(max_length=64)
-    image = models.FileField()
+    description = models.CharField(max_length=64, blank=True)
+    main_image = models.FileField()
     price_buy = models.FloatField(default=0.0)
     stock = models.IntegerField(default=0)
     capacity = models.IntegerField(default=0)
@@ -72,6 +73,20 @@ class Product(models.Model):
     class Meta:
         verbose_name = "Producto"
         verbose_name_plural = "Productos"
+
+
+class Image(models.Model):
+    code = models.CharField(max_length=16, unique=True)
+    image = models.FileField()
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "{}".format(self.code)
+
+    class Meta:
+        verbose_name = "Imagen"
+        verbose_name_plural = "Imagenes"
+
 
 class ProductPresentation(models.Model):
     code = models.CharField(max_length=12, unique=True)

@@ -82,6 +82,7 @@ class Detail(models.Model):
                                      on_delete=models.CASCADE)
     amount = models.FloatField(default=0.0)
     subtotal = models.FloatField(default=0.0)
+    duties = models.ManyToManyField(Duty, blank=True)
 
     def __str__(self):
         return "[{}] {}".format(self.id, self.product)

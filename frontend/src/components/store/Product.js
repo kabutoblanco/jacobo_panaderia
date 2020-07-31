@@ -107,7 +107,7 @@ export class Product extends Component {
           <LazyLoadImage
             className='img-fluid'
             effect='opacity'
-            src={this.props.product.image}
+            src={this.props.product.main_image}
             alt=''
           />
         </div>

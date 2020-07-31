@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { Container, Row, Card, Col } from 'react-bootstrap';
-import { Bar } from 'react-chartjs-2';
+import { HorizontalBar } from 'react-chartjs-2';
 
 import './index.css';
 
@@ -23,18 +23,22 @@ export class Inventory extends Component {
           backgroundColor: ['blue'],
           indexAxis: 'x',
         },
+        {
+          label: 'Panbazo',
+          data: [65],
+          backgroundColor: ['green'],
+          indexAxis: 'x',
+        },
+        {
+          label: 'Pan bogotano',
+          data: [65],
+          backgroundColor: ['gray'],
+          indexAxis: 'x',
+        },
       ],
     };
     const options = {
-      scales: {
-        xAxes: [
-          {
-            ticks: {
-              beginAtZero: true,
-            },
-          },
-        ],
-      },
+      responsive: true,
     };
     return (
       <Container className='h-100 container-overflow'>
@@ -44,7 +48,7 @@ export class Inventory extends Component {
             <Card>
               <Card.Header>Quote</Card.Header>
               <Card.Body>
-                <Bar data={data} options={options} />
+                <HorizontalBar data={data} options={options} />
               </Card.Body>
             </Card>
           </Col>
@@ -52,7 +56,7 @@ export class Inventory extends Component {
             <Card>
               <Card.Header>Quote</Card.Header>
               <Card.Body>
-                <Bar data={data} />
+                <HorizontalBar data={data} />
               </Card.Body>
             </Card>
           </Col>
@@ -63,7 +67,7 @@ export class Inventory extends Component {
             <Card>
               <Card.Header>Quote</Card.Header>
               <Card.Body>
-                <Bar data={data} />
+                <HorizontalBar data={data} />
               </Card.Body>
             </Card>
           </Col>

@@ -79,7 +79,7 @@ export class Product extends Component {
                 effect='blur'
                 className='img-fluid'
                 style={{ maxWidth: '100px' }}
-                src={this.props.product.image}
+                src={this.props.product.main_image}
                 alt=''
               />
               <div className='delete' onClick={this.onDeleteCart}>

@@ -2,12 +2,9 @@ import axios from 'axios';
 
 import { GET_PRODUCTS } from './types';
 
-export const getProducts = (category) => (dispatch) => {
-  const data = {
-    category: category
-  }
+export const getProducts = (name) => (dispatch) => {
   axios
-    .get(`/products/api/list/${category}/`, data)
+    .get(`/api/categories/${name}/products`)
     .then((res) => {
       dispatch({
         type: GET_PRODUCTS,

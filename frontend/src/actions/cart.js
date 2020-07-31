@@ -18,7 +18,7 @@ export const loadCart = () => (dispatch) => {
     return item.presentation.id;
   });
   const data = JSON.stringify(ids);
-  axios.get('/products/api/product/' + data + '/').then((res) => {
+  axios.get(`/api/carts/${data}/products`).then((res) => {
     dispatch({
       type: CART_LOADED,
       payload: { remote: res.data, local: products },
