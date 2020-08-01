@@ -1,77 +1,64 @@
 import React, { Component } from 'react';
 
 import { Container, Row, Card, Col } from 'react-bootstrap';
-import { HorizontalBar } from 'react-chartjs-2';
+import ReactTable from 'react-table-6';
 
 import './index.css';
+import 'react-table-6/react-table.css';
 
 export class Inventory extends Component {
   render() {
-    const data = {
-      type: 'horizontalBar',
-      labels: ['Escasos'],
-      datasets: [
-        {
-          label: 'Pan cacho',
-          data: [65],
-          backgroundColor: ['red'],
-          indexAxis: 'x',
+    const data = [
+      {
+        name: 'Tanner Linsley',
+        age: 26,
+        friend: {
+          name: 'Jason Maurer',
+          age: 23,
         },
-        {
-          label: 'Pan coco',
-          data: [65],
-          backgroundColor: ['blue'],
-          indexAxis: 'x',
-        },
-        {
-          label: 'Panbazo',
-          data: [65],
-          backgroundColor: ['green'],
-          indexAxis: 'x',
-        },
-        {
-          label: 'Pan bogotano',
-          data: [65],
-          backgroundColor: ['gray'],
-          indexAxis: 'x',
-        },
-      ],
-    };
-    const options = {
-      responsive: true,
-    };
+      },
+    ];
+    const columns = [
+      {
+        Header: 'Ref',
+        accessor: 'name', // String-based value accessors!
+      },
+      {
+        Header: 'Nombre',
+        accessor: 'age',
+        Cell: (props) => <span className='number'>{props.value}</span>, // Custom cell components!
+      },
+      {
+        id: 'friendName', // Required because our accessor is not a string
+        Header: 'Stock',
+        accessor: (d) => d.friend.name, // Custom value accessors!
+      },
+      {
+        Header: (props) => <span>Friend Age</span>, // Custom header components!
+        accessor: 'friend.age',
+      },
+    ];
     return (
-      <Container className='h-100 container-overflow'>
-        <span>Productos escasos</span>
-        <Row>
-          <Col>
-            <Card>
-              <Card.Header>Quote</Card.Header>
-              <Card.Body>
-                <HorizontalBar data={data} options={options} />
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col>
-            <Card>
-              <Card.Header>Quote</Card.Header>
-              <Card.Body>
-                <HorizontalBar data={data} />
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-        <span>Productos más vendidos</span>
-        <Row>
-          <Col>
-            <Card>
-              <Card.Header>Quote</Card.Header>
-              <Card.Body>
-                <HorizontalBar data={data} />
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
+      <Container className='h-100 py-5'>
+        <span className='h4'>Lista de productos</span>
+        <ReactTable
+          getTrProps={(state, rowInfo, column) => {
+            return {
+              style: {
+                background: rowInfo.row.age > 20 ? 'green' : 'red',
+              },
+            };
+          }}
+          className='mt-2'
+          data={data}
+          columns={columns}
+          defaultPageSize={5}
+          previousText='Atras'
+          nextText='Siguiente'
+          pageText='Página'
+          ofText='de'
+          rowsText='filas'
+        />
       </Container>
     );
   }

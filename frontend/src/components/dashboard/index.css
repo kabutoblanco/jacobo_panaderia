@@ -27,7 +27,7 @@
 }
 
 .container-overflow .card {
-    width: fit-content;
+    width: 100%;
 }
 
 .container-overflow .col {
