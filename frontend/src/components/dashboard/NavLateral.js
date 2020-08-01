@@ -15,9 +15,9 @@ export class NavLateral extends Component {
           style={{
             height: this.props.height + 'px',
           }}>
-          <Link to='/ventas' className='first-menu'>VENTAS</Link>
-          <Link to='/compras'>COMPRAS</Link>
-          <Link to='/inventario'>INVENTARIO</Link>
+          <Link to='/ventas' onClick={this.props.onChange} className='first-menu'>VENTAS</Link>
+          <Link to='/compras' onClick={this.props.onChange}>COMPRAS</Link>
+          <Link to='/inventario' onClick={this.props.onChange}>INVENTARIO</Link>
         </Nav>
       </div>
     );

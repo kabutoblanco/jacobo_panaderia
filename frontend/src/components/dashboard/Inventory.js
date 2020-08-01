@@ -5,7 +5,7 @@ import ReactTable from 'react-table-6';
 
 import './index.css';
 import 'react-table-6/react-table.css';
-import { getProducts } from '../../actions/inventory';
+import { getProducts, resetProducts } from '../../actions/inventory';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -16,6 +16,10 @@ export class Inventory extends Component {
 
   componentDidMount() {
     this.props.getProducts('pan', 2);
+  }
+
+  componentWillUnmount() {
+    this.props.resetProducts();
   }
 
   render() {
@@ -35,7 +39,10 @@ export class Inventory extends Component {
       {
         id: 'estado',
         Header: 'Estado',
-        accessor: (d) => (d.stock / d.capacity).toFixed(2),
+        accessor: (d) => (d.stock / d.capacity).toFixed(2) * 100,
+        Cell: (props) => (
+          <span>{props.value}%</span>
+        ),
       },
       {
         Header: 'Stock',
@@ -83,4 +90,4 @@ const mapStateToProps = (state) => ({
   products: state.inventory.products,
 });
 
-export default connect(mapStateToProps, { getProducts })(Inventory);
+export default connect(mapStateToProps, { getProducts, resetProducts })(Inventory);

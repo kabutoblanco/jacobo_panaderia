@@ -24,6 +24,7 @@ export class Header extends Component {
 
   state = {
     select: false,
+    check: true,
   };
 
   onLogout = () => {
@@ -31,7 +32,18 @@ export class Header extends Component {
   };
 
   onLink = () => {
-    this.setState({ option: true, select: false });
+    this.setState({ option: true, select: false});
+  };
+
+  onNav = () => {
+    this.setState({ check: true});
+  }
+
+  onChange = (event) => {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+    this.setState({ [name]: value });
   };
 
   render() {
@@ -43,14 +55,22 @@ export class Header extends Component {
         <Button
           variant='outline-success'
           className='p-0 btn-salir float-right'
-          onClick={this.onLogout}>
+          onClick={this.onLogout}
+        >
           SALIR
         </Button>
-        <input type='checkbox' name='' id='expand-menu' />
+        <input
+          type='checkbox'
+          name='check'
+          id='expand-menu'
+          checked={this.state.check}
+          value={this.state.check}
+          onChange={this.onChange}
+        />
         <label className='label-menu' htmlFor='expand-menu'>
           <img src='/static/frontend/img/menu.png' height='15' alt='' />
         </label>
-        <NavLateral height={this.props.height} />
+        <NavLateral height={this.props.height} onChange={this.onNav} />
       </>
     );
     const guestLinks = (
@@ -58,44 +78,51 @@ export class Header extends Component {
         <Link
           to='/inicio'
           className={path.endsWith('inicio') ? 'active-custom' : ''}
-          onClick={this.onLink}>
+          onClick={this.onLink}
+        >
           Inicio
         </Link>
         <Link
           to='/favoritos'
           className={path.endsWith('favoritos') ? 'active-custom' : ''}
-          onClick={this.onLink}>
+          onClick={this.onLink}
+        >
           Favoritos
         </Link>
         <Link
           to='/panes'
           className={path.endsWith('panes') ? 'active-custom' : ''}
-          onClick={this.onLink}>
+          onClick={this.onLink}
+        >
           Panes
         </Link>
         <Link
           to='/pasteles'
           className={path.endsWith('pasteles') ? 'active-custom' : ''}
-          onClick={this.onLink}>
+          onClick={this.onLink}
+        >
           Pasteles
         </Link>
         <Link
           to='/galletas'
           className={path.endsWith('galletas') ? 'active-custom' : ''}
-          onClick={this.onLink}>
+          onClick={this.onLink}
+        >
           Galletas
         </Link>
         <Link
           to='/carro'
           className={path.endsWith('carro') ? 'active-custom' : ''}
-          onClick={this.onLink}>
+          onClick={this.onLink}
+        >
           <div className='cart cart-inner'>
             <FontAwesomeIcon icon={faShoppingCart} />
             <span
               className='count-cart'
               style={{
                 display: this.props.products.length > 0 ? 'inline' : 'none',
-              }}>
+              }}
+            >
               {this.props.products.length}
             </span>
           </div>
@@ -110,7 +137,8 @@ export class Header extends Component {
           style={{
             display: isAuthenticated ? 'block' : 'flex',
             height: isAuthenticated ? '43px' : 'auto',
-          }}>
+          }}
+        >
           {!isAuthenticated ? (
             <Navbar.Toggle
               aria-controls='main-nav'
@@ -122,18 +150,21 @@ export class Header extends Component {
           <Link
             to='/carro'
             className={path.endsWith('carro') ? 'active-custom' : ''}
-            onClick={this.onLink}>
+            onClick={this.onLink}
+          >
             <div
               className='cart cart-top'
               style={{
                 display: !isAuthenticated && width <= 575 ? 'inline' : 'none',
-              }}>
+              }}
+            >
               <FontAwesomeIcon icon={faShoppingCart} />
               <span
                 className='count-cart'
                 style={{
                   display: this.props.products.length > 0 ? 'inline' : 'none',
-                }}>
+                }}
+              >
                 {this.props.products.length}
               </span>
             </div>

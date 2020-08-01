@@ -12,6 +12,7 @@ export const SET_CART = 'SET_CART';
 export const DELETE_CART = 'DELETE_CART';
 
 export const GET_PRODUCTS = 'GET_PRODUCTS';
+export const RESET_PRODUCTS = 'RESET_PRODUCTS';
 
 export const SET_OPTION = 'SET_OPTION';
 

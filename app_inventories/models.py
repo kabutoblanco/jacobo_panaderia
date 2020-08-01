@@ -51,6 +51,8 @@ class Action(PolymorphicModel):
     duties = models.ManyToManyField(Duty, blank=True)
     is_active = models.BooleanField(default=True)
 
+    
+
     def __str__(self):
         return "[{}] {}".format(self.id, self.total)
 
@@ -69,6 +71,8 @@ class Pay(models.Model):
     date = models.DateTimeField(auto_now=True)
     action = models.ForeignKey(Action, on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
+
+    
 
     def __str__(self):
         return "[{}] {}".format(self.code, self.action)
@@ -101,6 +105,8 @@ class Sale(Action):
     invoice = models.CharField(max_length=32, unique=True)
     mode = models.IntegerField(choices=TYPE_CHOICES, default=1)
 
+    objects = SaleManager()
+
     class Meta:
         verbose_name = "Venta"
         verbose_name_plural = "Ventas"
@@ -108,6 +114,8 @@ class Sale(Action):
 
 class Buy(Action):
     invoice = models.CharField(max_length=32, unique=True)
+
+    objects = BuyManager()
 
     class Meta:
         verbose_name = "Compra"

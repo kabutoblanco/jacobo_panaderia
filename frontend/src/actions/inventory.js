@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { GET_PRODUCTS } from './types';
+import { GET_PRODUCTS, RESET_PRODUCTS } from './types';
 
 export const getProducts = (name, type) => (dispatch) => {
   axios
@@ -12,4 +12,11 @@ export const getProducts = (name, type) => (dispatch) => {
       });
     })
     .catch((err) => console.log(err));
+};
+
+export const resetProducts = () => (dispatch) => {
+  dispatch({
+    type: RESET_PRODUCTS,
+    payload: [],
+  });
 };
