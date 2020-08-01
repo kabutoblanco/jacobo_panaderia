@@ -27,6 +27,12 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = ("id", "name", "main_image", "stock", "presentations")
 
 
+class ProductInventorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ("id", "ref", "name", "stock", "capacity")
+
+
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product

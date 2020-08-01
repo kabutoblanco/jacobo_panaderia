@@ -26,6 +26,7 @@ class Duty(models.Model):
     name = models.CharField(max_length=16)
     percentage_price = models.FloatField(default=0.0)
     fixed_price = models.FloatField(default=0.0)
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = "Impuesto"
@@ -48,6 +49,7 @@ class Action(PolymorphicModel):
     last_date = models.DateTimeField(auto_now=True)
     type = models.IntegerField(choices=TYPE_CHOICES, default=1)
     duties = models.ManyToManyField(Duty, blank=True)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return "[{}] {}".format(self.id, self.total)
@@ -66,6 +68,7 @@ class Pay(models.Model):
     payment = models.FloatField(default=0.0)
     date = models.DateTimeField(auto_now=True)
     action = models.ForeignKey(Action, on_delete=models.CASCADE)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return "[{}] {}".format(self.code, self.action)

@@ -12,8 +12,6 @@ const PrivateRoute = lazy(() => import('./common/PrivateRoute'));
 const Alerts = lazy(() => import('./layout/Alerts'));
 import Banner from './layout/Banner';
 import Header from './layout/Header';
-// const Banner = lazy(() => import('./layout/Banner'));
-// const Header = lazy(() => import('./layout/Header'));
 const Dashboard = lazy(() => import('./common/Dashboard'));
 const Footer = lazy(() => import('./layout/Footer'));
 

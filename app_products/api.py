@@ -6,6 +6,7 @@ from .serializers import (
     RegisterSerializer,
     UpdateSerializer,
     ProductPresentationSerializer,
+    ProductInventorySerializer
 )
 
 import json
@@ -45,12 +46,15 @@ class UpdateAPI(generics.GenericAPIView):
 
 
 class ListAPI(generics.RetrieveAPIView):
-    serializer_class = ProductSerializer
-
     def get(self, request, *args, **kwargs):
         category = kwargs["name"]
-        queryset = Product.objects.filter(category__name=category)
-        return Response({"products": ProductSerializer(queryset, many=True).data})
+        type = kwargs["type"]
+        queryset = Product.objects.filter(category__name=category, is_active=True)
+        if type == 1:
+            queryset = queryset.filter(is_store=True)
+            return Response({"products": ProductSerializer(queryset, many=True).data})
+        else:
+            return Response({"products": ProductInventorySerializer(queryset, many=True).data})
 
 
 class DetailCartAPI(generics.RetrieveAPIView):

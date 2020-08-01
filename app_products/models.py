@@ -62,6 +62,8 @@ class Product(models.Model):
     stock = models.IntegerField(default=0)
     capacity = models.IntegerField(default=0)
     unit_base = models.ForeignKey(Unit, on_delete=models.CASCADE)
+    is_active = models.BooleanField(default=True)
+    is_store = models.BooleanField(default=True)
     presentations = models.ManyToManyField(Presentation, through='ProductPresentation', through_fields=('product', 'presentation'))
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
@@ -79,6 +81,7 @@ class Image(models.Model):
     code = models.CharField(max_length=16, unique=True)
     image = models.FileField()
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return "{}".format(self.code)
@@ -93,6 +96,7 @@ class ProductPresentation(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     presentation = models.ForeignKey(Presentation, on_delete=models.CASCADE)
     price_sale = models.FloatField(default=0.0)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return "[{}] {} {}".format(self.id, self.presentation.name, self.price_sale)

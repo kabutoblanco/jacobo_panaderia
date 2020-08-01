@@ -21,7 +21,6 @@ class Dashboard extends Component {
   render() {
     return (
       <div style={{ height: this.props.height + 'px' }}>
-        {/* <NavLateral height={this.props.height} /> */}
         <this.onUpdateProducts />
       </div>
     );

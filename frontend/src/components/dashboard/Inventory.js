@@ -5,49 +5,64 @@ import ReactTable from 'react-table-6';
 
 import './index.css';
 import 'react-table-6/react-table.css';
+import { getProducts } from '../../actions/inventory';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 export class Inventory extends Component {
+  static propTypes = {
+    products: PropTypes.array.isRequired,
+  };
+
+  componentDidMount() {
+    this.props.getProducts('pan', 2);
+  }
+
   render() {
-    const data = [
-      {
-        name: 'Tanner Linsley',
-        age: 26,
-        friend: {
-          name: 'Jason Maurer',
-          age: 23,
-        },
-      },
-    ];
+    const data = this.props.products;
     const columns = [
       {
         Header: 'Ref',
-        accessor: 'name', // String-based value accessors!
+        accessor: 'ref',
       },
       {
         Header: 'Nombre',
-        accessor: 'age',
-        Cell: (props) => <span className='number'>{props.value}</span>, // Custom cell components!
+        accessor: 'name',
+        Cell: (props) => (
+          <span className='capitalize'>{props.value}</span>
+        ),
       },
       {
-        id: 'friendName', // Required because our accessor is not a string
+        id: 'estado',
+        Header: 'Estado',
+        accessor: (d) => (d.stock / d.capacity).toFixed(2),
+      },
+      {
         Header: 'Stock',
-        accessor: (d) => d.friend.name, // Custom value accessors!
+        accessor: 'stock',
       },
       {
-        Header: (props) => <span>Friend Age</span>, // Custom header components!
-        accessor: 'friend.age',
+        Header: 'Capacidad',
+        accessor: 'capacity',
       },
     ];
     return (
       <Container className='h-100 py-5'>
         <span className='h4'>Lista de productos</span>
         <ReactTable
-          getTrProps={(state, rowInfo, column) => {
-            return {
-              style: {
-                background: rowInfo.row.age > 20 ? 'green' : 'red',
-              },
-            };
+          getTdProps={(state, rowInfo, column, instance) => {
+            if (rowInfo !== undefined) {
+              return {
+                style: {
+                  background:
+                    rowInfo.row.stock < rowInfo.row.capacity / 2
+                      ? 'rgba(251, 14, 4, 0.5)'
+                      : 'rgba(89, 209, 104, 0.5)',
+                },
+              };
+            } else {
+              return { style: { background: 'white' } };
+            }
           }}
           className='mt-2'
           data={data}
@@ -64,4 +79,8 @@ export class Inventory extends Component {
   }
 }
 
-export default Inventory;
+const mapStateToProps = (state) => ({
+  products: state.inventory.products,
+});
+
+export default connect(mapStateToProps, { getProducts })(Inventory);
