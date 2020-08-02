@@ -21,6 +21,20 @@ class BuyManager(BaseUserManager):
         return buy
 
 
+class DetailManager(BaseUserManager):
+    def create_detail(self, validate_data):
+        detail = Detail(**validate_data)
+        detail.save()
+        return detail
+
+
+class PayManager(BaseUserManager):
+    def create_pay(self, validate_data):
+        pay = Pay(**validate_data)
+        pay.save()
+        return pay
+
+
 class Duty(models.Model):
     code = models.CharField(max_length=12, unique=True)
     name = models.CharField(max_length=16)
@@ -51,8 +65,6 @@ class Action(PolymorphicModel):
     duties = models.ManyToManyField(Duty, blank=True)
     is_active = models.BooleanField(default=True)
 
-    
-
     def __str__(self):
         return "[{}] {}".format(self.id, self.total)
 
@@ -72,7 +84,7 @@ class Pay(models.Model):
     action = models.ForeignKey(Action, on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
 
-    
+    objects = PayManager()
 
     def __str__(self):
         return "[{}] {}".format(self.code, self.action)
@@ -90,6 +102,8 @@ class Detail(models.Model):
     amount = models.FloatField(default=0.0)
     subtotal = models.FloatField(default=0.0)
     duties = models.ManyToManyField(Duty, blank=True)
+
+    objects = DetailManager()
 
     def __str__(self):
         return "[{}] {}".format(self.id, self.product)

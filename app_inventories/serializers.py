@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Sale, Buy
+from .models import Sale, Buy, Detail, Pay
 from django.contrib.auth import authenticate
 
 
@@ -55,6 +55,58 @@ class RegisterBuySerializer(serializers.ModelSerializer):
 class UpdateBuySerializer(serializers.ModelSerializer):
     class Meta:
         model = Buy
+        exclude = ("code",)
+
+    def update(self, instance, validated_data):
+        instance.name = validated_data["name"]
+        instance.price_buy = validated_data["price_buy"]
+        instance.price_sale = validated_data["price_sale"]
+        instance.stock = validated_data["stock"]
+        instance.category = validated_data["category"]
+        instance.save()
+        return instance
+
+
+class RegisterDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Detail
+        fields = "__all__"
+
+    def create(self, validated_data):
+        detail = Detail.objects.create_detail(validated_data)
+        detail.save()
+        return detail
+
+
+class UpdateDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Detail
+        exclude = ("code",)
+
+    def update(self, instance, validated_data):
+        instance.name = validated_data["name"]
+        instance.price_buy = validated_data["price_buy"]
+        instance.price_sale = validated_data["price_sale"]
+        instance.stock = validated_data["stock"]
+        instance.category = validated_data["category"]
+        instance.save()
+        return instance
+
+
+class RegisterPaySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Pay
+        fields = "__all__"
+
+    def create(self, validated_data):
+        pay = Pay.objects.create_detail(validated_data)
+        pay.save()
+        return pay
+
+
+class UpdatePaySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Pay
         exclude = ("code",)
 
     def update(self, instance, validated_data):
