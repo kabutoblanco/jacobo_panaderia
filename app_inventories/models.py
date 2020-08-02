@@ -38,8 +38,8 @@ class PayManager(BaseUserManager):
 class Duty(models.Model):
     code = models.CharField(max_length=12, unique=True)
     name = models.CharField(max_length=16)
-    percentage_price = models.FloatField(default=0.0)
-    fixed_price = models.FloatField(default=0.0)
+    value = models.FloatField(default=0.0)
+    is_percentage = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
 
     class Meta:
@@ -101,6 +101,7 @@ class Detail(models.Model):
                                      on_delete=models.CASCADE)
     amount = models.FloatField(default=0.0)
     subtotal = models.FloatField(default=0.0)
+    total = models.FloatField(default=0.0)
     duties = models.ManyToManyField(Duty, blank=True)
 
     objects = DetailManager()
@@ -119,7 +120,7 @@ class Sale(Action):
     invoice = models.CharField(max_length=32, unique=True)
     mode = models.IntegerField(choices=TYPE_CHOICES, default=1)
 
-    objects = SaleManager()
+    # objects = SaleManager()
 
     class Meta:
         verbose_name = "Venta"
@@ -129,7 +130,7 @@ class Sale(Action):
 class Buy(Action):
     invoice = models.CharField(max_length=32, unique=True)
 
-    objects = BuyManager()
+    # objects = BuyManager()
 
     class Meta:
         verbose_name = "Compra"

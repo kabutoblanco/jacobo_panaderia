@@ -21,7 +21,7 @@ class RegisterSaleSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
     def create(self, validated_data):
-        sale = Sale.objects.create_sale(validated_data)
+        sale = Sale.objects.create(**validated_data)
         sale.save()
         return sale
 
@@ -47,7 +47,7 @@ class RegisterBuySerializer(serializers.ModelSerializer):
         fields = "__all__"
 
     def create(self, validated_data):
-        buy = Buy.objects.create_buy(validated_data)
+        buy = Buy.objects.create(**validated_data)
         buy.save()
         return buy
 
