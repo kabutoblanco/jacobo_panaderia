@@ -174,11 +174,16 @@
   display: none !important;
 }
 
-.PrivateNotchedOutline-legendLabelled-3, .PrivateNotchedOutline-legendLabelled-7 {
+.PrivateNotchedOutline-legendLabelled-3,
+.PrivateNotchedOutline-legendLabelled-7 {
   display: none !important;
 }
 
 .PrivateNotchedOutline-root-1 {
   height: calc(1.5em + 0.75rem + 2px) !important;
   top: 0 !important;
+}
+
+.MuiAutocomplete-popper {
+  left: 0 !important;
 }

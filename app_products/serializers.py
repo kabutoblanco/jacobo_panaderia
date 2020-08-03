@@ -3,6 +3,12 @@ from .models import Product, Presentation, ProductPresentation
 from django.contrib.auth import authenticate
 
 
+class ProductInventorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ("id", "ref", "name", "stock", "capacity")
+
+
 class PresentationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Presentation
@@ -10,27 +16,21 @@ class PresentationSerializer(serializers.ModelSerializer):
 
 
 class ProductPresentationSerializer(serializers.ModelSerializer):
+    product = ProductInventorySerializer()
     presentation = PresentationSerializer()
 
     class Meta:
         model = ProductPresentation
-        fields = ("id", "presentation", "price_sale")
+        fields = ("id", "product", "presentation", "price_sale")
 
 
 class ProductSerializer(serializers.ModelSerializer):
     presentations = ProductPresentationSerializer(
-        many=True, read_only=True, source="productpresentation_set"
-    )
+        many=True, read_only=True, source="productpresentation_set")
 
     class Meta:
         model = Product
         fields = ("id", "name", "main_image", "stock", "presentations")
-
-
-class ProductInventorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Product
-        fields = ("id", "ref", "name", "stock", "capacity")
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -47,7 +47,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 class UpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        exclude = ("code",)
+        exclude = ("code", )
 
     def update(self, instance, validated_data):
         instance.name = validated_data["name"]
