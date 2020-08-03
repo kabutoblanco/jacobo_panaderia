@@ -2,53 +2,88 @@ from django.db import models
 from django.contrib.auth.models import BaseUserManager
 from django.utils.translation import ugettext_lazy as _
 from polymorphic.models import PolymorphicModel
-from app_products.models import Product, ProductPresentation
+from app_products.models import Product, ProductPresentation, Duty
 from app_accounts.models import User
 
 
 # Create your models here.
-class SaleManager(BaseUserManager):
-    def create_sale(self, validate_data):
-        sale = Sale(**validate_data)
-        sale.save()
-        return sale
-
-
-class BuyManager(BaseUserManager):
-    def create_buy(self, validate_data):
-        buy = Buy(**validate_data)
-        buy.save()
-        return buy
-
-
 class DetailManager(BaseUserManager):
-    def create_detail(self, validate_data):
-        detail = Detail(**validate_data)
+    def create_detail(self, validated_data):
+        detail = Detail(**validated_data)
         detail.save()
         return detail
 
 
 class PayManager(BaseUserManager):
-    def create_pay(self, validate_data):
-        pay = Pay(**validate_data)
+    def create_pay(self, validated_data):
+        pay = Pay(**validated_data)
         pay.save()
         return pay
 
+class ActionHelper():
+    def register_details(self, validated_data):
+        data = validated_data["data"]
+        action = validated_data["action"]
+        serializer_detail = validated_data["serializer"]
+        accumulated_duties = 0
+        subtotal_sale = 0
+        total_sale = 0
+        for detail in data["details"]:
+            query_presentation = ProductPresentation.objects.get(pk=detail["presentation"])
+            detail["subtotal"] = query_presentation.price_sale * detail["amount"]
+            subtotal_sale += detail["subtotal"]
+            duties = 0
+            query_product = Product.objects.get(pk=detail["product"])
+            if validated_data["is_sale"]:
+                query_presentation.stock -= detail["amount"]
+                query_product.stock -= detail["amount"] * query_presentation.presentation.amount
+            else:
+                query_presentation.stock += detail["amount"]
+                query_product.stock += detail["amount"] * query_presentation.presentation.amount
+            query_presentation.save()
+            query_product.save()
+            query_duty = query_product.duties.all()
+            for duty in query_duty:
+                if duty.is_percentage:
+                    duties += detail["subtotal"] * duty.value
+                    accumulated_duties += detail["subtotal"] * duty.value
+                else:
+                    duties += query_duty.value
+                    accumulated_duties += duty.value
+            detail["action"] = action.id
+            detail["total"] = detail["subtotal"] + duties
+            serializer = serializer_detail(data=detail)
+            serializer.is_valid(raise_exception=True)
+            detail_instance = serializer.save()
+            total_sale += detail["total"]
+        action.duties_details = accumulated_duties
+        action.subtotal = subtotal_sale
+        action.total = total_sale
+        action.save()
 
-class Duty(models.Model):
-    code = models.CharField(max_length=12, unique=True)
-    name = models.CharField(max_length=16)
-    value = models.FloatField(default=0.0)
-    is_percentage = models.BooleanField(default=True)
-    is_active = models.BooleanField(default=True)
+    def register_duties(self, validated_data):
+        data = validated_data["data"]
+        action = validated_data["action"]
+        accumulated_duties = 0
+        for duty in data["action"]["duties_list"]:
+            query_duty = Duty.objects.get(pk=duty)
+            if query_duty.is_percentage:
+                accumulated_duties += action.subtotal * query_duty.value
+            else:
+                accumulated_duties += query_duty.value
+        action.total = action.subtotal + action.duties_details + accumulated_duties
+        action.duties.add(*data["action"]["duties_list"])
+        action.save()
 
-    class Meta:
-        verbose_name = "Impuesto"
-        verbose_name_plural = "Impuestos"
-
-    def __str__(self):
-        return "[{}] {}".format(self.code, self.name)
-
+    def register_pays(self, validated_data):
+        data = validated_data["data"]
+        action = validated_data["action"]
+        serializer_pay = validated_data["serializer"]
+        for pay in data["pays"]:
+            pay["action"] = action.id
+            serializer = serializer_pay(data=pay)
+            serializer.is_valid(raise_exception=True)
+            pay_instance = serializer.save()
 
 class Action(PolymorphicModel):
     TYPE_CHOICES = ((1, _("CONTADO")), (2, _("CREDITO")), (3, _("MIXTO")))
@@ -63,7 +98,10 @@ class Action(PolymorphicModel):
     last_date = models.DateTimeField(auto_now=True)
     type = models.IntegerField(choices=TYPE_CHOICES, default=1)
     duties = models.ManyToManyField(Duty, blank=True)
+    duties_details = models.FloatField(default=0.0)
     is_active = models.BooleanField(default=True)
+
+    helper = ActionHelper()
 
     def __str__(self):
         return "[{}] {}".format(self.id, self.total)
@@ -102,12 +140,11 @@ class Detail(models.Model):
     amount = models.FloatField(default=0.0)
     subtotal = models.FloatField(default=0.0)
     total = models.FloatField(default=0.0)
-    duties = models.ManyToManyField(Duty, blank=True)
 
     objects = DetailManager()
 
     def __str__(self):
-        return "[{}] {}".format(self.id, self.product)
+        return "[{}] {}".format(self.id, self.action)
 
     class Meta:
         verbose_name = "Detalle"
@@ -118,9 +155,7 @@ class Sale(Action):
     TYPE_CHOICES = ((1, _("LOCAL")), (2, _("DOMICILIO")))
 
     invoice = models.CharField(max_length=32, unique=True)
-    mode = models.IntegerField(choices=TYPE_CHOICES, default=1)
-
-    # objects = SaleManager()
+    mode = models.IntegerField(choices=TYPE_CHOICES, default=1)    
 
     class Meta:
         verbose_name = "Venta"
@@ -129,8 +164,6 @@ class Sale(Action):
 
 class Buy(Action):
     invoice = models.CharField(max_length=32, unique=True)
-
-    # objects = BuyManager()
 
     class Meta:
         verbose_name = "Compra"

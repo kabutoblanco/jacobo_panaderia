@@ -53,6 +53,21 @@ class Presentation(models.Model):
         verbose_name_plural = "Presentaciones"
 
 
+class Duty(models.Model):
+    code = models.CharField(max_length=12, unique=True)
+    name = models.CharField(max_length=16)
+    value = models.FloatField(default=0.0)
+    is_percentage = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = "Impuesto"
+        verbose_name_plural = "Impuestos"
+
+    def __str__(self):
+        return "[{}] {}".format(self.code, self.name)
+
+
 class Product(models.Model):
     ref = models.CharField(max_length=12, unique=True)
     name = models.CharField(max_length=64)
@@ -62,6 +77,7 @@ class Product(models.Model):
     stock = models.IntegerField(default=0)
     capacity = models.IntegerField(default=0)
     unit_base = models.ForeignKey(Unit, on_delete=models.CASCADE)
+    duties = models.ManyToManyField(Duty, blank=True)
     is_active = models.BooleanField(default=True)
     is_store = models.BooleanField(default=True)
     presentations = models.ManyToManyField(Presentation, through='ProductPresentation', through_fields=('product', 'presentation'))
@@ -95,6 +111,8 @@ class ProductPresentation(models.Model):
     code = models.CharField(max_length=12, unique=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     presentation = models.ForeignKey(Presentation, on_delete=models.CASCADE)
+    stock = models.IntegerField(default=0)
+    capacity = models.IntegerField(default=0)
     price_sale = models.FloatField(default=0.0)
     is_active = models.BooleanField(default=True)
 

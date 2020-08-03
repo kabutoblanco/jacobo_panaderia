@@ -99,7 +99,7 @@ class RegisterPaySerializer(serializers.ModelSerializer):
         fields = "__all__"
 
     def create(self, validated_data):
-        pay = Pay.objects.create_detail(validated_data)
+        pay = Pay.objects.create_pay(validated_data)
         pay.save()
         return pay
 

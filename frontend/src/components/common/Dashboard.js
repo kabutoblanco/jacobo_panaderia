@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import Sale from '../dashboard/Sale';
+import Buy from '../dashboard/Buy';
 import Inventory from '../dashboard/Inventory';
 
 class Dashboard extends Component {
@@ -10,7 +11,7 @@ class Dashboard extends Component {
       case '/ventas':
         return <Sale />;
       case '/compras':
-        return <p>Compras</p>;
+        return <Buy />;
       case '/inventario':
         return <Inventory />;
       default:
