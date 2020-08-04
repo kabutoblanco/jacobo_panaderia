@@ -30,7 +30,10 @@ class ActionHelper():
         total_sale = 0
         for detail in data["details"]:
             query_presentation = ProductPresentation.objects.get(pk=detail["presentation"])
-            detail["subtotal"] = query_presentation.price_sale * detail["amount"]
+            if validated_data["is_sale"]:
+                detail["subtotal"] = query_presentation.price_sale * detail["amount"]
+            else:
+                detail["subtotal"] = query_presentation.product.price_buy * detail["amount"]
             subtotal_sale += detail["subtotal"]
             duties = 0
             query_product = Product.objects.get(pk=detail["product"])

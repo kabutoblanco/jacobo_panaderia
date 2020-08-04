@@ -11,6 +11,8 @@ export const ADD_CART = 'ADD_CART';
 export const SET_CART = 'SET_CART';
 export const DELETE_CART = 'DELETE_CART';
 
+export const ADD_SALE = 'ADD_SALE';
+export const ADD_BUY = 'ADD_BUY';
 export const GET_PRODUCTS = 'GET_PRODUCTS';
 export const RESET_PRODUCTS = 'RESET_PRODUCTS';
 

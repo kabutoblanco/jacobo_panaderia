@@ -11,7 +11,7 @@ import {
 } from 'react-bootstrap';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
-import { getProducts, resetProducts } from '../../actions/inventory';
+import { addSale, getProducts, resetProducts } from '../../actions/inventory';
 import { connect } from 'react-redux';
 
 import './index.css';
@@ -23,10 +23,10 @@ export class Sale extends Component {
     product: {},
   };
 
-  onSaveSale = () => {
+  onAddSale = () => {
     const { product, amount, payment } = this.state;
     const ref = new Date().toLocaleString();
-    data = {
+    const data = {
       action: {
         user: null,
         invoice: ref,
@@ -36,7 +36,7 @@ export class Sale extends Component {
         {
           product: product.product.id,
           presentation: product.presentation.id,
-          amount: amount,
+          amount: parseFloat(amount),
         },
       ],
       pays: [
@@ -47,16 +47,24 @@ export class Sale extends Component {
         },
       ],
     };
+    this.props.addSale(data);
   };
 
   onChange = (event) => {
-    const { name, value } = event.target;
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
+    let { name, value } = event.target;
+    const { product } = this.state;
+    if (value === '') value = 0;
+    this.setState(
+      {
+        [name]: value,
+      },
+      () => {
+        if (name === 'amount') {
+          this.setState({ payment: value * product.price_sale });
+        }
+      }
+    );
   };
-
-  onUpdatePayment = () => {};
 
   componentDidMount() {
     this.props.getProducts('solo', 0);
@@ -67,6 +75,8 @@ export class Sale extends Component {
   }
 
   render() {
+    const { amount, payment } = this.state;
+    const { products } = this.props;
     return (
       <Container>
         <Card className='mt-5 mb-2'>
@@ -79,16 +89,17 @@ export class Sale extends Component {
                     <Form.Label>Producto</Form.Label>
                     <Autocomplete
                       id='combo-box-demo'
-                      options={this.props.products}
+                      options={products}
                       getOptionLabel={(option) => {
                         return (
                           option.product.name + ' ' + option.presentation.name
                         );
                       }}
                       onChange={(event, value) => {
-                        this.setState({ product: value }, () =>
-                          this.onUpdatePayment
-                        );
+                        this.setState({
+                          product: value,
+                          payment: amount * value.price_sale,
+                        });
                       }}
                       style={{ width: 300 }}
                       renderOption={(option) => (
@@ -118,9 +129,11 @@ export class Sale extends Component {
                   <Form.Group>
                     <Form.Label>Cantidad</Form.Label>
                     <Form.Control
+                      type='number'
                       placeholder='Ej. 12'
-                      value={this.state.amount}
-                      onChange={this.onChange, this.onUpdatePayment}
+                      name='amount'
+                      value={amount}
+                      onChange={this.onChange}
                     />
                   </Form.Group>
                 </Col>
@@ -128,15 +141,19 @@ export class Sale extends Component {
                   <Form.Group>
                     <Form.Label>Valor</Form.Label>
                     <Form.Control
+                      type='number'
                       placeholder='Ej. 2000'
-                      value={this.state.payment}
+                      name='payment'
+                      value={payment}
                       onChange={this.onChange}
                     />
                   </Form.Group>
                 </Col>
                 <Col md={3} lg={2} className='align-self-end'>
                   <Form.Group>
-                    <Button className='w-100'>+</Button>
+                    <Button className='w-100' onClick={this.onAddSale}>
+                      +
+                    </Button>
                   </Form.Group>
                 </Col>
               </Row>
@@ -182,4 +199,8 @@ const mapStateToProps = (state) => ({
   products: state.inventory.products,
 });
 
-export default connect(mapStateToProps, { getProducts, resetProducts })(Sale);
+export default connect(mapStateToProps, {
+  addSale,
+  getProducts,
+  resetProducts,
+})(Sale);

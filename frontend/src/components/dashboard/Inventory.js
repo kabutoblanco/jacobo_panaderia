@@ -26,23 +26,15 @@ export class Inventory extends Component {
     const data = this.props.products;
     const columns = [
       {
-        Header: 'Ref',
-        accessor: 'ref',
-      },
-      {
         Header: 'Nombre',
         accessor: 'name',
-        Cell: (props) => (
-          <span className='capitalize'>{props.value}</span>
-        ),
+        Cell: (props) => <span className='capitalize'>{props.value}</span>,
       },
       {
         id: 'estado',
-        Header: 'Estado',
+        Header: 'Stock %',
         accessor: (d) => (d.stock / d.capacity).toFixed(2) * 100,
-        Cell: (props) => (
-          <span>{props.value}%</span>
-        ),
+        Cell: (props) => <span>{props.value}%</span>,
       },
       {
         Header: 'Stock',
@@ -90,4 +82,6 @@ const mapStateToProps = (state) => ({
   products: state.inventory.products,
 });
 
-export default connect(mapStateToProps, { getProducts, resetProducts })(Inventory);
+export default connect(mapStateToProps, { getProducts, resetProducts })(
+  Inventory
+);
