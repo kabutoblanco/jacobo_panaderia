@@ -65,7 +65,8 @@ class SaleAPI(generics.RetrieveAPIView):
         today_min = pytz.utc.localize(
             dt.datetime.combine(dt.date.today(), dt.time.min))
         today_max = pytz.utc.localize(
-            dt.datetime.combine(datetime.date.today(), dt.time.max))
+            dt.datetime.combine(dt.date.today(), dt.time.max))
+        print(Sale.objects.last().date)
         query = Sale.objects.filter(date__range=(today_min, today_max))
         return Response({"sales": SaleSerializer(query, many=True).data})
 

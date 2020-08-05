@@ -20,6 +20,7 @@ import {
   getSales,
 } from '../../actions/inventory';
 import { connect } from 'react-redux';
+var moment = require('moment');
 
 import './index.css';
 
@@ -92,9 +93,11 @@ export class Sale extends Component {
         accessor: 'id',
       },
       {
-        Header: 'No.',
-        accesor: 'invoice',
-        Cell: (props) => <span>{props.original.invoice}</span>,
+        Header: 'Fecha',
+        accesor: 'date',
+        Cell: (props) => (
+          <span>{moment(props.original.date).add(5, 'hours').format('YYYY-MM-DD hh:mm A')}</span>
+        ),
       },
       {
         Header: 'Total',
