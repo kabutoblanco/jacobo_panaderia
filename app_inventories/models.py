@@ -8,7 +8,7 @@ from app_accounts.models import User
 import pytz, datetime
 
 
-pytz.timezone('America/Bogota')
+pytz.timezone('America/Bogota') 
 
 # Create your models here.
 class DetailManager(BaseUserManager):
