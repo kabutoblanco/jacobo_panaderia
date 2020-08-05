@@ -110,8 +110,7 @@ class Action(PolymorphicModel):
                                 default=dt.datetime.now() -
                                 dt.timedelta(hours=5))
     last_date = models.DateTimeField(auto_now=False,
-                                     default=dt.datetime.now() -
-                                     dt.timedelta(hours=5))
+                                     default=dt.datetime.now())
     type = models.IntegerField(choices=TYPE_CHOICES, default=1)
     duties = models.ManyToManyField(Duty, blank=True)
     duties_details = models.FloatField(default=0.0)
