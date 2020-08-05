@@ -86,6 +86,9 @@ export class Sale extends Component {
   render() {
     const { amount, payment } = this.state;
     const { products, sales } = this.props;
+    const total = sales.reduce(function (a, b) {
+      return a + b.total;
+    }, 0);
     const handleFocus = (event) => event.target.select();
     const columns = [
       {
@@ -96,7 +99,11 @@ export class Sale extends Component {
         Header: 'Fecha',
         accesor: 'date',
         Cell: (props) => (
-          <span>{moment(props.original.date).add(5, 'hours').format('YYYY-MM-DD hh:mm A')}</span>
+          <span>
+            {moment(props.original.date)
+              .add(5, 'hours')
+              .format('YYYY-MM-DD hh:mm A')}
+          </span>
         ),
       },
       {
@@ -114,7 +121,7 @@ export class Sale extends Component {
     ];
     return (
       <Container>
-        <Card className='mt-5 mb-2'>
+        <Card className='mt-5 mb-3'>
           <Card.Header>Venta rápida</Card.Header>
           <Card.Body>
             <Form>
@@ -197,9 +204,17 @@ export class Sale extends Component {
             </Form>
           </Card.Body>
         </Card>
-        <span className='h5'>Ventas del día</span>
+        <span className='h5'>
+          Ventas del día:{'  '}
+          <CurrencyFormat
+            value={total}
+            displayType={'text'}
+            thousandSeparator={true}
+            prefix={'$'}
+          />
+        </span>
         <ReactTable
-          className='mt-2'
+          className='mt-3 mb-2'
           data={sales}
           columns={columns}
           defaultPageSize={5}

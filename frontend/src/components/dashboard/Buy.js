@@ -86,6 +86,9 @@ export class Buy extends Component {
   render() {
     const { amount, payment } = this.state;
     const { products, buys } = this.props;
+    const total = buys.reduce(function (a, b) {
+      return a + b.total;
+    }, 0);
     const handleFocus = (event) => event.target.select();
     const columns = [
       {
@@ -118,7 +121,7 @@ export class Buy extends Component {
     ];
     return (
       <Container>
-        <Card className='mt-5 mb-2'>
+        <Card className='mt-5 mb-3'>
           <Card.Header>Compra rápida</Card.Header>
           <Card.Body>
             <Form>
@@ -201,9 +204,17 @@ export class Buy extends Component {
             </Form>
           </Card.Body>
         </Card>
-        <span className='h5'>Compras del día</span>
+        <span className='h5'>
+          Compras del día:{'  '}
+          <CurrencyFormat
+            value={total}
+            displayType={'text'}
+            thousandSeparator={true}
+            prefix={'$'}
+          />
+        </span>
         <ReactTable
-          className='mt-2'
+          className='mt-3 mb-2'
           data={buys}
           columns={columns}
           defaultPageSize={5}
