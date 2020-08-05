@@ -106,8 +106,12 @@ class Action(PolymorphicModel):
                              null=True)
     subtotal = models.FloatField(default=0.0)
     total = models.FloatField(default=0.0)
-    date = models.DateTimeField(auto_now=True)
-    last_date = models.DateTimeField(auto_now=True)
+    date = models.DateTimeField(auto_now=False,
+                                default=dt.datetime.now() -
+                                dt.timedelta(hours=5))
+    last_date = models.DateTimeField(auto_now=False,
+                                     default=dt.datetime.now() -
+                                     dt.timedelta(hours=5))
     type = models.IntegerField(choices=TYPE_CHOICES, default=1)
     duties = models.ManyToManyField(Duty, blank=True)
     duties_details = models.FloatField(default=0.0)
@@ -130,7 +134,9 @@ class Pay(models.Model):
                              null=True)
     type = models.IntegerField(choices=TYPE_CHOICES, default=1)
     payment = models.FloatField(default=0.0)
-    date = models.DateTimeField(auto_now=True)
+    date = models.DateTimeField(auto_now=False,
+                                default=dt.datetime.now() -
+                                dt.timedelta(hours=5))
     action = models.ForeignKey(Action, on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
 

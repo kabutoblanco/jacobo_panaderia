@@ -118,7 +118,7 @@ LANGUAGE_CODE = "es-co"
 
 TIME_ZONE = "America/Bogota"
 
-USE_TZ = True
+USE_TZ = False
 USE_L10N = True
 USE_I18N = True
 
