@@ -116,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "es-co"
 
-TIME_ZONE = "America/Bogota"
+TIME_ZONE = "UTC"
 
 USE_TZ = True
 USE_L10N = False
