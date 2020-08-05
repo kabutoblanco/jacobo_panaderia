@@ -108,11 +108,9 @@ class Action(PolymorphicModel):
     subtotal = models.FloatField(default=0.0)
     total = models.FloatField(default=0.0)
     date = models.DateTimeField(auto_now=False,
-                                default=pytz.utc.localize(
-                                    datetime.datetime.now()))
+                                default=datetime.datetime.now())
     last_date = models.DateTimeField(auto_now=False,
-                                     default=pytz.utc.localize(
-                                         datetime.datetime.now()))
+                                     default=datetime.datetime.now())
     type = models.IntegerField(choices=TYPE_CHOICES, default=1)
     duties = models.ManyToManyField(Duty, blank=True)
     duties_details = models.FloatField(default=0.0)
@@ -136,8 +134,7 @@ class Pay(models.Model):
     type = models.IntegerField(choices=TYPE_CHOICES, default=1)
     payment = models.FloatField(default=0.0)
     date = models.DateTimeField(auto_now=False,
-                                default=pytz.utc.localize(
-                                    datetime.datetime.now()))
+                                default=datetime.datetime.now())
     action = models.ForeignKey(Action, on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
 
