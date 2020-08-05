@@ -77,6 +77,7 @@ export class Sale extends Component {
   render() {
     const { amount, payment } = this.state;
     const { products } = this.props;
+    const handleFocus = (event) => event.target.select();
     return (
       <Container>
         <Card className='mt-5 mb-2'>
@@ -133,6 +134,7 @@ export class Sale extends Component {
                       placeholder='Ej. 12'
                       name='amount'
                       value={amount}
+                      onFocus={handleFocus}
                       onChange={this.onChange}
                     />
                   </Form.Group>
@@ -145,6 +147,7 @@ export class Sale extends Component {
                       placeholder='Ej. 2000'
                       name='payment'
                       value={payment}
+                      onFocus={handleFocus}
                       onChange={this.onChange}
                     />
                   </Form.Group>
@@ -197,6 +200,7 @@ export class Sale extends Component {
 
 const mapStateToProps = (state) => ({
   products: state.inventory.products,
+  is_success: state.inventory.is_success,
 });
 
 export default connect(mapStateToProps, {

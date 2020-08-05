@@ -1,6 +1,13 @@
 import axios from 'axios';
 
-import { ADD_SALE, ADD_BUY, GET_PRODUCTS, RESET_PRODUCTS } from './types';
+import {
+  ADD_SALE,
+  ADD_BUY,
+  GET_PRODUCTS,
+  RESET_PRODUCTS,
+  FAIL_REQUEST,
+} from './types';
+import { createMessage, returnErrors } from './messages';
 
 export const addSale = (action) => (dispatch) => {
   const data = action;
@@ -12,8 +19,12 @@ export const addSale = (action) => (dispatch) => {
         type: ADD_SALE,
         payload: res.data.sale,
       });
+      dispatch(createMessage({ addSale: 'Venta registrada' }));
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      dispatch({ type: FAIL_REQUEST });
+      dispatch(returnErrors(err.response.data, err.response.status));
+    });
 };
 
 export const addBuy = (action) => (dispatch) => {
@@ -25,8 +36,12 @@ export const addBuy = (action) => (dispatch) => {
         type: ADD_BUY,
         payload: res.data.buy,
       });
+      dispatch(createMessage({ addSale: 'Compra registrada' }));
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      dispatch({ type: FAIL_REQUEST });
+      dispatch(returnErrors(err.response.data, err.response.status));
+    });
 };
 
 export const getProducts = (name, type) => (dispatch) => {

@@ -15,6 +15,7 @@ export const ADD_SALE = 'ADD_SALE';
 export const ADD_BUY = 'ADD_BUY';
 export const GET_PRODUCTS = 'GET_PRODUCTS';
 export const RESET_PRODUCTS = 'RESET_PRODUCTS';
+export const FAIL_REQUEST = 'FAIL_REQUEST';
 
 export const SET_OPTION = 'SET_OPTION';
 

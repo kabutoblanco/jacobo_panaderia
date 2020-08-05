@@ -6,6 +6,8 @@ from .serializers import (SaleSerializer, RegisterSaleSerializer,
                           RegisterBuySerializer)
 
 import json
+import datetime
+import pytz
 
 
 class RegisterSaleAPI(generics.GenericAPIView):
@@ -56,4 +58,15 @@ class RegisterBuyAPI(generics.GenericAPIView):
             "buy":
             SaleSerializer(buy, context=self.get_serializer_context()).data
         })
-    
+
+
+class SaleAPI(generics.RetrieveAPIView):
+    serializer_class = SaleSerializer
+
+    def get(self, request, *args, **kwargs):
+        today_min = pytz.utc.localize(datetime.datetime.combine(
+            datetime.date.today(), datetime.time.min))
+        today_max = pytz.utc.localize(datetime.datetime.combine(
+            datetime.date.today(), datetime.time.max))
+        query = Sale.objects.filter(date__range=(today_min, today_max))
+        return Response({"sales": SaleSerializer(query, many=True).data})

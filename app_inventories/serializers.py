@@ -6,13 +6,13 @@ from django.contrib.auth import authenticate
 class SaleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Sale
-        fields = ("id", "invoice", "total", "mode")
+        fields = ("id", "invoice", "total", "mode", "date")
 
 
 class BuySerializer(serializers.ModelSerializer):
     class Meta:
         model = Buy
-        fields = ("id", "invoice", "total")
+        fields = ("id", "invoice", "total", "date")
 
 
 class RegisterSaleSerializer(serializers.ModelSerializer):
