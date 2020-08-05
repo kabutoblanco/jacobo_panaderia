@@ -187,3 +187,7 @@
 .MuiAutocomplete-popper {
   left: 0 !important;
 }
+
+.jss3, .jss4 {
+  display: none !important;
+}
