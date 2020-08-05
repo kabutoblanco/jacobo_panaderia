@@ -5,9 +5,7 @@ from .serializers import (SaleSerializer, BuySerializer, RegisterSaleSerializer,
                           RegisterDetailSerializer, RegisterPaySerializer,
                           RegisterBuySerializer)
 
-import json, datetime, pytz
-
-pytz.timezone('America/Bogota') 
+import pytz, datetime
 
 
 class RegisterSaleAPI(generics.GenericAPIView):

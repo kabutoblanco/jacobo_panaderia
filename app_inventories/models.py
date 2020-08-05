@@ -5,6 +5,9 @@ from polymorphic.models import PolymorphicModel
 from app_products.models import Product, ProductPresentation, Duty
 from app_accounts.models import User
 
+from django.utils.timezone import datetime as dt
+import pytz
+
 
 # Create your models here.
 class DetailManager(BaseUserManager):
@@ -17,6 +20,8 @@ class DetailManager(BaseUserManager):
 class PayManager(BaseUserManager):
     def create_pay(self, validated_data):
         pay = Pay(**validated_data)
+        date_now = pytz.utc.localize(dt.now())
+        pay.date = date_now
         pay.save()
         return pay
 
@@ -26,6 +31,9 @@ class ActionHelper():
         data = validated_data["data"]
         action = validated_data["action"]
         serializer_detail = validated_data["serializer"]
+        date_now = pytz.utc.localize(dt.now())
+        action.date = date_now
+        action.last_date = date_now
         accumulated_duties = 0
         subtotal_sale = 0
         total_sale = 0
@@ -105,8 +113,8 @@ class Action(PolymorphicModel):
                              null=True)
     subtotal = models.FloatField(default=0.0)
     total = models.FloatField(default=0.0)
-    date = models.DateTimeField(auto_now=True)
-    last_date = models.DateTimeField(auto_now=True)
+    date = models.DateTimeField(auto_now=False, blank=True, null=True)
+    last_date = models.DateTimeField(auto_now=False, blank=True, null=True)
     type = models.IntegerField(choices=TYPE_CHOICES, default=1)
     duties = models.ManyToManyField(Duty, blank=True)
     duties_details = models.FloatField(default=0.0)
@@ -129,7 +137,7 @@ class Pay(models.Model):
                              null=True)
     type = models.IntegerField(choices=TYPE_CHOICES, default=1)
     payment = models.FloatField(default=0.0)
-    date = models.DateTimeField(auto_now=True)
+    date = models.DateTimeField(auto_now=False, blank=True, null=True)
     action = models.ForeignKey(Action, on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
 
