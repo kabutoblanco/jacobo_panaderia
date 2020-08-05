@@ -118,8 +118,8 @@ LANGUAGE_CODE = "es-co"
 
 TIME_ZONE = "America/Bogota"
 
-USE_TZ = False
-USE_L10N = True
+USE_TZ = True
+USE_L10N = False
 USE_I18N = True
 
 # Static files (CSS, JavaScript, Images)
