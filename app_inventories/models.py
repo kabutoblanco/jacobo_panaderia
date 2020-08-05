@@ -107,7 +107,9 @@ class Action(PolymorphicModel):
                              null=True)
     subtotal = models.FloatField(default=0.0)
     total = models.FloatField(default=0.0)
-    date = models.DateTimeField(auto_now=False, default=pytz.utc.localize(dt.datetime.now()))
+    date = models.DateTimeField(
+        auto_now=False,
+        default=pytz.utc.localize(dt.datetime.now() + dt.timedelta(hours=5)))
     last_date = models.DateTimeField(auto_now=True)
     type = models.IntegerField(choices=TYPE_CHOICES, default=1)
     duties = models.ManyToManyField(Duty, blank=True)
