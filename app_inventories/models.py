@@ -4,8 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from polymorphic.models import PolymorphicModel
 from app_products.models import Product, ProductPresentation, Duty
 from app_accounts.models import User
-import datetime as dt
-import pytz
+import django.utils.timezone as dt
 
 
 # Create your models here.
@@ -107,10 +106,9 @@ class Action(PolymorphicModel):
                              null=True)
     subtotal = models.FloatField(default=0.0)
     total = models.FloatField(default=0.0)
-    date = models.DateTimeField(
-        auto_now=False,
-        default=pytz.timezone('America/Bogota').localize(
-            dt.datetime.now()).astimezone(pytz.utc))
+    date = models.DateTimeField(auto_now=False,
+                                default=dt.datetime.now() -
+                                dt.timedelta(hours=5))
     last_date = models.DateTimeField(auto_now=False,
                                      default=dt.datetime.now() -
                                      dt.timedelta(hours=5))
