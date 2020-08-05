@@ -5,6 +5,8 @@ from polymorphic.models import PolymorphicModel
 from app_products.models import Product, ProductPresentation, Duty
 from app_accounts.models import User
 
+import pytz, datetime
+
 
 # Create your models here.
 class DetailManager(BaseUserManager):
@@ -105,8 +107,12 @@ class Action(PolymorphicModel):
                              null=True)
     subtotal = models.FloatField(default=0.0)
     total = models.FloatField(default=0.0)
-    date = models.DateTimeField(auto_now=True)
-    last_date = models.DateTimeField(auto_now=True)
+    date = models.DateTimeField(auto_now=False,
+                                default=pytz.utc.localize(
+                                    datetime.datetime.now()))
+    last_date = models.DateTimeField(auto_now=False,
+                                     default=pytz.utc.localize(
+                                         datetime.datetime.now()))
     type = models.IntegerField(choices=TYPE_CHOICES, default=1)
     duties = models.ManyToManyField(Duty, blank=True)
     duties_details = models.FloatField(default=0.0)
@@ -129,7 +135,9 @@ class Pay(models.Model):
                              null=True)
     type = models.IntegerField(choices=TYPE_CHOICES, default=1)
     payment = models.FloatField(default=0.0)
-    date = models.DateTimeField(auto_now=True)
+    date = models.DateTimeField(auto_now=False,
+                                default=pytz.utc.localize(
+                                    datetime.datetime.now()))
     action = models.ForeignKey(Action, on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
 
