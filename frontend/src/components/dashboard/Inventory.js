@@ -33,8 +33,8 @@ export class Inventory extends Component {
       {
         id: 'estado',
         Header: 'Stock %',
-        accessor: (d) => ((d.stock / d.capacity) * 100).toFixed(2),
-        Cell: (props) => <span>{props.value}%</span>,
+        accessor: (d) => d.stock / d.capacity,
+        Cell: (props) => <span>{(props.value * 100).toFixed(2)}%</span>,
       },
       {
         Header: 'Stock',
