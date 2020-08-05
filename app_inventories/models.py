@@ -8,6 +8,8 @@ from app_accounts.models import User
 import pytz, datetime
 
 
+pytz.timezone('America/Bogota')
+
 # Create your models here.
 class DetailManager(BaseUserManager):
     def create_detail(self, validated_data):
