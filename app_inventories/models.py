@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from polymorphic.models import PolymorphicModel
 from app_products.models import Product, ProductPresentation, Duty
 from app_accounts.models import User
-import datetime as dt
+import django.utils.timezone as dt
 import pytz
 
 
