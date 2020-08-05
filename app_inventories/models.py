@@ -5,6 +5,8 @@ from polymorphic.models import PolymorphicModel
 from app_products.models import Product, ProductPresentation, Duty
 from app_accounts.models import User
 
+import pytz, datetime
+
 
 # Create your models here.
 class DetailManager(BaseUserManager):
@@ -20,6 +22,7 @@ class PayManager(BaseUserManager):
         pay.save()
         return pay
 
+
 class ActionHelper():
     def register_details(self, validated_data):
         data = validated_data["data"]
@@ -29,20 +32,26 @@ class ActionHelper():
         subtotal_sale = 0
         total_sale = 0
         for detail in data["details"]:
-            query_presentation = ProductPresentation.objects.get(pk=detail["presentation"])
+            query_presentation = ProductPresentation.objects.get(
+                pk=detail["presentation"])
             if validated_data["is_sale"]:
-                detail["subtotal"] = query_presentation.price_sale * detail["amount"]
+                detail["subtotal"] = query_presentation.price_sale * detail[
+                    "amount"]
             else:
-                detail["subtotal"] = query_presentation.product.price_buy * detail["amount"]
+                detail[
+                    "subtotal"] = query_presentation.product.price_buy * detail[
+                        "amount"]
             subtotal_sale += detail["subtotal"]
             duties = 0
             query_product = Product.objects.get(pk=detail["product"])
             if validated_data["is_sale"]:
                 query_presentation.stock -= detail["amount"]
-                query_product.stock -= detail["amount"] * query_presentation.presentation.amount
+                query_product.stock -= detail[
+                    "amount"] * query_presentation.presentation.amount
             else:
                 query_presentation.stock += detail["amount"]
-                query_product.stock += detail["amount"] * query_presentation.presentation.amount
+                query_product.stock += detail[
+                    "amount"] * query_presentation.presentation.amount
             query_presentation.save()
             query_product.save()
             query_duty = query_product.duties.all()
@@ -88,6 +97,7 @@ class ActionHelper():
             serializer.is_valid(raise_exception=True)
             pay_instance = serializer.save()
 
+
 class Action(PolymorphicModel):
     TYPE_CHOICES = ((1, _("CONTADO")), (2, _("CREDITO")), (3, _("MIXTO")))
 
@@ -97,8 +107,12 @@ class Action(PolymorphicModel):
                              null=True)
     subtotal = models.FloatField(default=0.0)
     total = models.FloatField(default=0.0)
-    date = models.DateTimeField(auto_now=True)
-    last_date = models.DateTimeField(auto_now=True)
+    date = models.DateTimeField(auto_now=False,
+                                default=pytz.utc.localize(
+                                    datetime.datetime.now()))
+    last_date = models.DateTimeField(auto_now=False,
+                                     default=pytz.utc.localize(
+                                         datetime.datetime.now()))
     type = models.IntegerField(choices=TYPE_CHOICES, default=1)
     duties = models.ManyToManyField(Duty, blank=True)
     duties_details = models.FloatField(default=0.0)
@@ -121,7 +135,9 @@ class Pay(models.Model):
                              null=True)
     type = models.IntegerField(choices=TYPE_CHOICES, default=1)
     payment = models.FloatField(default=0.0)
-    date = models.DateTimeField(auto_now=True)
+    date = models.DateTimeField(auto_now=False,
+                                default=pytz.utc.localize(
+                                    datetime.datetime.now()))
     action = models.ForeignKey(Action, on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
 
@@ -158,7 +174,7 @@ class Sale(Action):
     TYPE_CHOICES = ((1, _("LOCAL")), (2, _("DOMICILIO")))
 
     invoice = models.CharField(max_length=32, unique=True)
-    mode = models.IntegerField(choices=TYPE_CHOICES, default=1)    
+    mode = models.IntegerField(choices=TYPE_CHOICES, default=1)
 
     class Meta:
         verbose_name = "Venta"

@@ -6,6 +6,8 @@ import {
   GET_PRODUCTS,
   RESET_PRODUCTS,
   FAIL_REQUEST,
+  GET_SALES,
+  GET_BUYS,
 } from './types';
 import { createMessage, returnErrors } from './messages';
 
@@ -61,4 +63,28 @@ export const resetProducts = () => (dispatch) => {
     type: RESET_PRODUCTS,
     payload: [],
   });
+};
+
+export const getSales = () => (dispatch) => {
+  axios
+    .get(`/api/sales/list`)
+    .then((res) => {
+      dispatch({
+        type: GET_SALES,
+        payload: res.data.sales,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
+export const getBuys = () => (dispatch) => {
+  axios
+    .get(`/api/buys/list`)
+    .then((res) => {
+      dispatch({
+        type: GET_BUYS,
+        payload: res.data.buys,
+      });
+    })
+    .catch((err) => console.log(err));
 };

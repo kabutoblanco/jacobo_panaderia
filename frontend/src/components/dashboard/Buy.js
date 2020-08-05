@@ -11,7 +11,14 @@ import {
 } from 'react-bootstrap';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
-import { addBuy, getProducts, resetProducts } from '../../actions/inventory';
+import CurrencyFormat from 'react-currency-format';
+import ReactTable from 'react-table-6';
+import {
+  addBuy,
+  getProducts,
+  resetProducts,
+  getBuys,
+} from '../../actions/inventory';
 import { connect } from 'react-redux';
 
 import './index.css';
@@ -35,7 +42,7 @@ export class Buy extends Component {
       details: [
         {
           product: product.product.id,
-          presentation: product.presentation.id,
+          presentation: product.id,
           amount: parseFloat(amount),
         },
       ],
@@ -68,6 +75,7 @@ export class Buy extends Component {
 
   componentDidMount() {
     this.props.getProducts('solo', 0);
+    this.props.getBuys();
   }
 
   componentWillUnmount() {
@@ -76,8 +84,31 @@ export class Buy extends Component {
 
   render() {
     const { amount, payment } = this.state;
-    const { products } = this.props;
+    const { products, buys } = this.props;
     const handleFocus = (event) => event.target.select();
+    const columns = [
+      {
+        Header: 'ID',
+        accessor: 'id',
+      },
+      {
+        Header: 'No.',
+        accesor: 'invoice',
+        Cell: (props) => <span>{props.original.invoice}</span>,
+      },
+      {
+        Header: 'Total',
+        accessor: 'total',
+        Cell: (props) => (
+          <CurrencyFormat
+            value={props.value}
+            displayType={'text'}
+            thousandSeparator={true}
+            prefix={'$'}
+          />
+        ),
+      },
+    ];
     return (
       <Container>
         <Card className='mt-5 mb-2'>
@@ -164,35 +195,17 @@ export class Buy extends Component {
           </Card.Body>
         </Card>
         <span className='h5'>Compras del día</span>
-        <Table striped bordered hover variant='dark'>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Username</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td colSpan='2'>Larry the Bird</td>
-              <td>@twitter</td>
-            </tr>
-          </tbody>
-        </Table>
+        <ReactTable
+          className='mt-2'
+          data={buys}
+          columns={columns}
+          defaultPageSize={5}
+          previousText='Atras'
+          nextText='Siguiente'
+          pageText='Página'
+          ofText='de'
+          rowsText='filas'
+        />
       </Container>
     );
   }
@@ -200,10 +213,12 @@ export class Buy extends Component {
 
 const mapStateToProps = (state) => ({
   products: state.inventory.products,
+  buys: state.inventory.buys,
 });
 
 export default connect(mapStateToProps, {
   addBuy,
   getProducts,
   resetProducts,
+  getBuys,
 })(Buy);

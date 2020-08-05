@@ -4,6 +4,8 @@ import {
   GET_PRODUCTS,
   RESET_PRODUCTS,
   FAIL_REQUEST,
+  GET_SALES,
+  GET_BUYS,
 } from '../actions/types';
 
 const initialState = {
@@ -37,6 +39,16 @@ export default function (state = initialState, action) {
       return {
         ...state,
         is_sucess: false,
+      };
+    case GET_SALES:
+      return {
+        ...state,
+        sales: action.payload,
+      };
+    case GET_BUYS:
+      return {
+        ...state,
+        buys: action.payload,
       };
     default:
       return state;

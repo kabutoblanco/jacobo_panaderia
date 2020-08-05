@@ -12,7 +12,9 @@ export const SET_CART = 'SET_CART';
 export const DELETE_CART = 'DELETE_CART';
 
 export const ADD_SALE = 'ADD_SALE';
+export const GET_SALES = 'GET_SALES';
 export const ADD_BUY = 'ADD_BUY';
+export const GET_BUYS = 'GET_BUYS';
 export const GET_PRODUCTS = 'GET_PRODUCTS';
 export const RESET_PRODUCTS = 'RESET_PRODUCTS';
 export const FAIL_REQUEST = 'FAIL_REQUEST';
