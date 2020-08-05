@@ -1,11 +1,11 @@
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from .models import Product, ProductPresentation, Duty, Sale, Buy
-from .serializers import (SaleSerializer, BuySerializer, RegisterSaleSerializer,
-                          RegisterDetailSerializer, RegisterPaySerializer,
-                          RegisterBuySerializer)
+from .serializers import (SaleSerializer, BuySerializer,
+                          RegisterSaleSerializer, RegisterDetailSerializer,
+                          RegisterPaySerializer, RegisterBuySerializer)
 
-import pytz, datetime
+import pytz, datetime as dt
 
 
 class RegisterSaleAPI(generics.GenericAPIView):
@@ -62,10 +62,10 @@ class SaleAPI(generics.RetrieveAPIView):
     serializer_class = SaleSerializer
 
     def get(self, request, *args, **kwargs):
-        today_min = pytz.utc.localize(datetime.datetime.combine(
-            datetime.date.today(), datetime.time.min))
-        today_max = pytz.utc.localize(datetime.datetime.combine(
-            datetime.date.today(), datetime.time.max))
+        today_min = pytz.utc.localize(
+            dt.datetime.combine(dt.date.today(), dt.time.min))
+        today_max = pytz.utc.localize(
+            dt.datetime.combine(datetime.date.today(), dt.time.max))
         query = Sale.objects.filter(date__range=(today_min, today_max))
         return Response({"sales": SaleSerializer(query, many=True).data})
 
@@ -74,9 +74,9 @@ class BuyAPI(generics.RetrieveAPIView):
     serializer_class = BuySerializer
 
     def get(self, request, *args, **kwargs):
-        today_min = pytz.utc.localize(datetime.datetime.combine(
-            datetime.date.today(), datetime.time.min))
-        today_max = pytz.utc.localize(datetime.datetime.combine(
-            datetime.date.today(), datetime.time.max))
+        today_min = pytz.utc.localize(
+            dt.datetime.combine(dt.date.today(), dt.time.min))
+        today_max = pytz.utc.localize(
+            dt.datetime.combine(dt.date.today(), dt.time.max))
         query = Buy.objects.filter(date__range=(today_min, today_max))
         return Response({"buys": BuySerializer(query, many=True).data})

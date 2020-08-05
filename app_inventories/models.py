@@ -5,8 +5,7 @@ from polymorphic.models import PolymorphicModel
 from app_products.models import Product, ProductPresentation, Duty
 from app_accounts.models import User
 
-from django.utils.timezone import datetime as dt
-import pytz
+import pytz, datetime as dt
 
 
 # Create your models here.
@@ -20,7 +19,7 @@ class DetailManager(BaseUserManager):
 class PayManager(BaseUserManager):
     def create_pay(self, validated_data):
         pay = Pay(**validated_data)
-        date_now = pytz.utc.localize(dt.now())
+        date_now = pytz.utc.localize(dt.datetime.now())
         pay.date = date_now
         pay.save()
         return pay
@@ -31,7 +30,7 @@ class ActionHelper():
         data = validated_data["data"]
         action = validated_data["action"]
         serializer_detail = validated_data["serializer"]
-        date_now = pytz.utc.localize(dt.now())
+        date_now = pytz.utc.localize(dt.datetime.now())
         action.date = date_now
         action.last_date = date_now
         accumulated_duties = 0
