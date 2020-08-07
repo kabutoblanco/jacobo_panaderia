@@ -13,6 +13,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import CurrencyFormat from 'react-currency-format';
 import TextField from '@material-ui/core/TextField';
 import ReactTable from 'react-table-6';
+// import SaleDetail from './SaleDetail';
 import {
   addSale,
   getProducts,
@@ -29,6 +30,7 @@ export class Sale extends Component {
     amount: 0,
     payment: 0,
     product: {},
+    show: false,
   };
 
   onAddSale = () => {
@@ -84,8 +86,14 @@ export class Sale extends Component {
   }
 
   render() {
-    const { amount, payment } = this.state;
+    const { amount, payment, show } = this.state;
     const { products, sales } = this.props;
+    const handleOpen = () => {
+      this.setState({ show: true });
+    };
+    const handleClose = () => {
+      this.setState({ show: false });
+    };
     const total = sales.reduce(function (a, b) {
       return a + b.total;
     }, 0);
@@ -121,8 +129,12 @@ export class Sale extends Component {
     ];
     return (
       <Container>
+        {/* <SaleDetail show={show} handleClose={handleClose} /> */}
         <Card className='mt-5 mb-3'>
-          <Card.Header>Venta rápida</Card.Header>
+          <Card.Header>
+            Venta rápida
+            {/* <span onClick={handleOpen} className='sale-detail'>venta detallada</span>{' '} */}
+          </Card.Header>
           <Card.Body>
             <Form>
               <Row>

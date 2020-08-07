@@ -188,6 +188,21 @@
   left: 0 !important;
 }
 
-.jss3, .jss4, .jss7, .jss8 {
+.jss3,
+.jss4,
+.jss7,
+.jss8 {
   display: none !important;
+}
+
+.sale-detail {
+  font-size: small;
+  float: right;
+  text-decoration: -moz-none;
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+.sale-detail:hover {
+  cursor: pointer;
 }

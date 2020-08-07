@@ -4,6 +4,8 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const AUTH_ERROR = 'AUTH_ERROR';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+export const ACTION_RUNNING = 'ACTION_RUNNING';
+export const ACTION_END = 'ACTION_END';
 
 export const CART_LOADED = 'CART_LOADED';
 export const CART_LOADING = 'CART_LOADING';

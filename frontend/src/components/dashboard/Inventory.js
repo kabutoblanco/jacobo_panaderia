@@ -51,14 +51,21 @@ export class Inventory extends Component {
         <ReactTable
           getTdProps={(state, rowInfo, column, instance) => {
             if (rowInfo !== undefined) {
-              return {
-                style: {
-                  background:
-                    rowInfo.row.stock < rowInfo.row.capacity / 2
-                      ? 'rgba(251, 14, 4, 0.5)'
-                      : 'rgba(89, 209, 104, 0.5)',
-                },
-              };
+              const { row } = rowInfo;
+              const fourth = row.capacity * 0.25;
+              const middle = row.capacity * 0.5;
+              const threeQuarters = row.capacity * 0.75;
+              let color = 'white';
+              if (row.stock <= fourth) {
+                color = 'rgba(251, 14, 4, 0.75)';
+              } else if (row.stock > fourth && row.stock <= middle) {
+                color = 'rgba(251, 14, 4, 0.5)';
+              } else if (row.stock > middle && row.stock <= threeQuarters) {
+                color = 'rgba(219, 216, 43, 0.5)';
+              } else if (row.stock > threeQuarters) {
+                color = 'rgba(89, 209, 104, 0.5)';
+              }
+              return { style: { background: color } };
             } else {
               return { style: { background: 'white' } };
             }

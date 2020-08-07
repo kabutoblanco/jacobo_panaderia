@@ -8,12 +8,14 @@ import {
   FAIL_REQUEST,
   GET_SALES,
   GET_BUYS,
+  ACTION_RUNNING,
+  ACTION_END,
 } from './types';
 import { createMessage, returnErrors } from './messages';
 
 export const addSale = (action) => (dispatch) => {
   const data = action;
-  console.log(data);
+  dispatch({ type: ACTION_RUNNING });
   axios
     .post(`/api/sales`, data)
     .then((res) => {
@@ -21,6 +23,7 @@ export const addSale = (action) => (dispatch) => {
         type: ADD_SALE,
         payload: res.data.sale,
       });
+      dispatch({ type: ACTION_END });
       dispatch(createMessage({ addSale: 'Venta registrada' }));
     })
     .catch((err) => {

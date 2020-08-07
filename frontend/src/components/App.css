@@ -13,3 +13,10 @@
 .lazy-load-image-loaded {
   min-width: 100%;
 }
+
+.progress {
+  z-index: 12;
+  position:fixed;
+  top: 0;
+  width: 100%;
+}

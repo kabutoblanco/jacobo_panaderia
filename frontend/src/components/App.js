@@ -12,6 +12,7 @@ const PrivateRoute = lazy(() => import('./common/PrivateRoute'));
 const Alerts = lazy(() => import('./layout/Alerts'));
 import Banner from './layout/Banner';
 import Header from './layout/Header';
+import ProgressAction from './layout/ProgressAction';
 const Dashboard = lazy(() => import('./common/Dashboard'));
 const Footer = lazy(() => import('./layout/Footer'));
 
@@ -62,13 +63,10 @@ class App extends Component {
     const hNavbar = document.getElementById('nav-top').clientHeight;
     const hWindow = window.innerHeight;
     const wWindow = window.innerWidth;
-    console.log(hWindow);
-    console.log(hNavbar);
-    console.log(hWindow - hNavbar);
     const height = hWindow - hNavbar;
-    
+
     this.setState({
-      height: hWindow - hBanner - hNavbar,      
+      height: hWindow - hBanner - hNavbar,
       width: wWindow,
       hWindow: height,
     });
@@ -81,8 +79,9 @@ class App extends Component {
       <Provider store={store}>
         <AlertProvider template={AlertTemplate} {...alertOptions}>
           <Router>
+            <ProgressAction />
             <Banner />
-            <Header height={hWindow} width={width}/>
+            <Header height={hWindow} width={width} />
             <Suspense fallback={<div>Loading...</div>}>
               <Fragment>
                 <Alerts />
@@ -91,7 +90,8 @@ class App extends Component {
                   className='app-main'
                   style={{
                     minHeight: height + 'px',
-                  }}>
+                  }}
+                >
                   <Switch>
                     <PrivateRoute
                       exact
