@@ -4,7 +4,6 @@ from django.utils.translation import ugettext_lazy as _
 from .models import User, Staff, Simple
 
 
-admin.site.register(User)
 class StaffAdmin(BaseUserAdmin):
     fieldsets = (
         (None, {"fields": ("username", "email", "password")}),
@@ -92,5 +91,6 @@ class SimpleAdmin(BaseUserAdmin):
 
 
 # Register your models here.
+admin.site.register(User, BaseUserAdmin)
 admin.site.register(Staff)
 admin.site.register(Simple)
